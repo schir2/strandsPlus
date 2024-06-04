@@ -1,8 +1,10 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Tile : MonoBehaviour
+public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerUpHandler
 {
     [System.Serializable]
     public class State
@@ -17,12 +19,16 @@ public class Tile : MonoBehaviour
     private Image fill;
     private Outline outline;
     private TextMeshProUGUI text;
+    private Board board;
+    internal int rowIndex;
+    internal int colIndex;
 
     private void Awake()
     {
         fill = GetComponent<Image>();
         outline = GetComponent<Outline>();
         text = GetComponentInChildren<TextMeshProUGUI>();
+        board = GetComponentInParent<Board>();
     }
 
     public void SetLetter(char letter)
@@ -38,4 +44,23 @@ public class Tile : MonoBehaviour
         outline.effectColor = state.outlineColor;
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        board.OnTilePointerDown(this);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        board.OnTilePointerEnter(this);
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        board.OnTilePointerUp();
+    }
+
+    internal string GetLetter()
+    {
+        return this.letter.ToString();
+    }
 }
