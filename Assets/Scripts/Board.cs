@@ -1,6 +1,6 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Board : MonoBehaviour
 {
@@ -17,19 +17,18 @@ public class Board : MonoBehaviour
     public Tile.State emptyState;
     public Tile.State selectedState;
     public Tile.State correctState;
-    public Tile.State validState;
+    public Tile.State spangramState;
 
     private bool isDragging = false;
     private int rowIndex;
     private int columnIndex;
 
-    private string word;
+    private int hints = 0;
+    private HashSet<string> validWordsGuessed = new HashSet<string>();
+    private HashSet<string> wordsGuessed = new HashSet<string>();
 
     private void Awake()
     {
-
-        numRows = 8;
-        numCols = 6;
         rows = new Row[numRows];
     }
 
@@ -55,6 +54,7 @@ public class Board : MonoBehaviour
 
             // Get Row component from the instantiated row GameObject
             Row rowComponent = rowGO.GetComponent<Row>();
+            rowComponent.tiles = new Tile[numCols];
 
             // Add the row to the rows array
             rows[row] = rowComponent;
@@ -139,10 +139,61 @@ public class Board : MonoBehaviour
             word += tile.GetLetter();
         }
 
-        Debug.Log(word);
-        Debug.Log(gameLogic.EvaluateWord(word));
+        GameLogic.WordEvaluation wordEvaluation = gameLogic.EvaluateWord(word);
 
+        ClearSelection();
+
+        if (wordsGuessed.Contains(word))
+        {
+            return;
+        }
+
+        if (GameLogic.WordEvaluation.Spangram == wordEvaluation)
+        {
+            hints += 1;
+            wordsGuessed.Add(word);
+            MarkSpangramWord();
+        }
+
+        else if (GameLogic.WordEvaluation.Correct == wordEvaluation)
+        {
+
+            hints += 1;
+            wordsGuessed.Add(word);
+            MarkCorrectWord();
+        }
+        else if (GameLogic.WordEvaluation.Valid == wordEvaluation)
+        {
+
+            hints += 1;
+            wordsGuessed.Add(word);
+        }
     }
+
+    private void UpdateSelectedTilesState(Tile.State state)
+    {
+        foreach (Tile tile in selectedTiles)
+        {
+            tile.SetState(state);
+        }
+    }
+
+    private void MarkSpangramWord()
+    {
+        UpdateSelectedTilesState(spangramState);
+    }
+
+    private void ClearSelection()
+    {
+        UpdateSelectedTilesState(emptyState);
+    }
+
+    private void MarkCorrectWord()
+    {
+        UpdateSelectedTilesState(correctState);
+    }
+
+
 
     private void AddTileToSelection(Tile tile)
     {

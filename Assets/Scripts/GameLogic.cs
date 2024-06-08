@@ -6,6 +6,7 @@ public class GameLogic : MonoBehaviour
 {
     public enum WordEvaluation
     {
+        Spangram,
         Correct,
         Valid,
         Invalid
@@ -14,24 +15,30 @@ public class GameLogic : MonoBehaviour
 
     private HashSet<string> correctWords = new HashSet<string>();
     private HashSet<string> validWords = new HashSet<string>();
+    private string spangram;
     public char[,] GeneratePuzzle(int rows, int cols)
     {
 
-        correctWords.Add("example");
-        correctWords.Add("eggs");
-        correctWords.Add("puzzle");
+        correctWords.Add("beta");
+        correctWords.Add("sigma");
+        correctWords.Add("gamma");
+        correctWords.Add("delta");
+        correctWords.Add("alpha");
+        correctWords.Add("kappa");
+        correctWords.Add("epsilon");
+        spangram = "greekletters";
 
         // Placeholder puzzle for testing
         return new char[,]
         {
-            { 's', 'h', 'i', 'p', 's', 'a' },
-            { 'a', 'h', 'e', 'm', 'e', 'l' },
-            { 'b', 'r', 'e', 'q', 't', 'a' },
-            { 'a', 's', 'a', 'u', 'e', 'o' },
-            { 'u', 's', 'k', 'f', 'i', 'h' },
-            { 'a', 'g', 'e', 'a', 's', 'c' },
-            { 'l', 'f', 'n', 'o', 'c', 't' },
-            { 'e', 'f', 'a', 'w', 'a', 'b' }
+            { 't', 'g', 'r', 'a', 'l', 'p' },
+            { 'a', 'e', 'e', 'e', 'k', 'h' },
+            { 'b', 'a', 'm', 'm', 'l', 'a' },
+            { 'd', 'g', 'a', 'e', 'k', 'a' },
+            { 'e', 'l', 'a', 't', 'p', 'p' },
+            { 's', 't', 'e', 't', 'a', 'l' },
+            { 'i', 'g', 'r', 'n', 'o', 'i' },
+            { 'a', 's', 's', 'e', 'p', 's' }
         };
     }
 
@@ -47,7 +54,11 @@ public class GameLogic : MonoBehaviour
 
     public WordEvaluation EvaluateWord(string word)
     {
-        if (IsCorrectdWord(word))
+        if (word == spangram)
+        {
+            return WordEvaluation.Spangram;
+        }
+        else if (IsCorrectdWord(word))
         {
             return WordEvaluation.Correct;
         }
