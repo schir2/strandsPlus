@@ -69,7 +69,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0}
   m_EffectDistance: {x: 3, y: 3}
   m_UseGraphicAlpha: 1
 --- !u!114 &2601439134938818688
@@ -132,6 +132,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d4237332264da46a73f07c66703275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emptyState:
+    fillColor: {r: 0.9862446, g: 1, b: 0.9858491, a: 1}
+    outlineColor: {r: 0, g: 0, b: 0, a: 0}
+    isInteractive: 1
+  selectedState:
+    fillColor: {r: 0.76862746, g: 0.75686276, b: 0.6862745, a: 1}
+    outlineColor: {r: 0, g: 0, b: 0, a: 0}
+    isInteractive: 0
+  correctState:
+    fillColor: {r: 0.68235296, g: 0.8745098, b: 0.93333334, a: 1}
+    outlineColor: {r: 0, g: 0, b: 0, a: 0}
+    isInteractive: 0
+  spangramState:
+    fillColor: {r: 0.972549, g: 0.79607844, b: 0.17254902, a: 1}
+    outlineColor: {r: 0, g: 0, b: 0, a: 0}
+    isInteractive: 0
 --- !u!1 &2437352335367901262
 GameObject:
   m_ObjectHideFlags: 0

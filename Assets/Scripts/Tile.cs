@@ -11,15 +11,24 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
     {
         public Color fillColor;
         public Color outlineColor;
+        public bool isInteractive;
     }
 
-    public State state { get; private set; }
+    [Header("Tiles")]
+    public Tile.State emptyState;
+    public Tile.State selectedState;
+    public Tile.State correctState;
+    public Tile.State spangramState;
+
+    public State currentState { get; private set; }
     public char letter { get; private set; }
 
     private Image fill;
     private Outline outline;
     private TextMeshProUGUI text;
     private Board board;
+    private CanvasGroup canvasGroup;
+
     internal int rowIndex;
     internal int colIndex;
 
@@ -29,6 +38,11 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
         outline = GetComponent<Outline>();
         text = GetComponentInChildren<TextMeshProUGUI>();
         board = GetComponentInParent<Board>();
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
     }
 
     public void SetLetter(char letter)
@@ -39,24 +53,54 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
 
     public void SetState(State state)
     {
-        this.state = state;
+        this.currentState = state;
         fill.color = state.fillColor;
         outline.effectColor = state.outlineColor;
+        canvasGroup.interactable = state.isInteractive;
+    }
+
+    public void SetEmptyState()
+    {
+        SetState(emptyState);
+    }
+
+    public void SetSelectedState()
+    {
+        SetState(selectedState);
+    }
+
+    public void SetCorrectState()
+    {
+        SetState(correctState);
+    }
+
+    public void SetSpangramState()
+    {
+        SetState(spangramState);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        board.OnTilePointerDown(this);
+        if (canvasGroup.interactable)
+        {
+            board.OnTilePointerDown(this);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        board.OnTilePointerEnter(this);
+        if (canvasGroup.interactable)
+        {
+            board.OnTilePointerEnter(this);
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        board.OnTilePointerUp();
+        if (canvasGroup.interactable)
+        {
+            board.OnTilePointerUp();
+        }
     }
 
     internal string GetLetter()

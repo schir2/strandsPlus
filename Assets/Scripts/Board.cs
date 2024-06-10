@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Board : MonoBehaviour
 {
@@ -8,28 +9,35 @@ public class Board : MonoBehaviour
     public GameLogic gameLogic;
     public GameObject rowPrefab;
     public GameObject tilePrefab;
+    public TextMeshProUGUI themeValueText;
+    public TextMeshProUGUI gameProgressText;
     public int numRows;
     public int numCols;
     private Row[] rows;
     private List<Tile> selectedTiles = new List<Tile>();
-
-    [Header("Tiles")]
-    public Tile.State emptyState;
-    public Tile.State selectedState;
-    public Tile.State correctState;
-    public Tile.State spangramState;
+    private HashSet<Tile> selectedTilesSet = new HashSet<Tile>();
 
     private bool isDragging = false;
     private int rowIndex;
     private int columnIndex;
 
     private int hints = 0;
-    private HashSet<string> validWordsGuessed = new HashSet<string>();
-    private HashSet<string> wordsGuessed = new HashSet<string>();
 
     private void Awake()
     {
         rows = new Row[numRows];
+        GameObject themeValueTextObject = GameObject.Find("ThemeValueText");
+        if (themeValueTextObject != null)
+        {
+            themeValueText = themeValueTextObject.GetComponent<TextMeshProUGUI>();
+        }
+        GameObject gameProgressTextObject = GameObject.Find("GameProgressText");
+        if (themeValueTextObject != null)
+        {
+            gameProgressText = gameProgressTextObject.GetComponent<TextMeshProUGUI>();
+        }
+
+        UpdateGameProgressText();
     }
 
     private void Start()
@@ -40,45 +48,25 @@ public class Board : MonoBehaviour
     public void NewGame()
     {
 
-        // Generate puzzle
         char[,] puzzle = gameLogic.GeneratePuzzle(numRows, numCols);
+        themeValueText.text = gameLogic.theme;
 
-        // Instantiate rows and attach tiles
         for (int row = 0; row < numRows; row++)
         {
-            // Instantiate row prefab
             GameObject rowGO = Instantiate(rowPrefab, transform);
-
-            // Set row position
             rowGO.transform.localPosition = new Vector3(0, -row, 0);
-
-            // Get Row component from the instantiated row GameObject
             Row rowComponent = rowGO.GetComponent<Row>();
             rowComponent.tiles = new Tile[numCols];
-
-            // Add the row to the rows array
             rows[row] = rowComponent;
-
-            // Instantiate tiles and attach them to the row
             for (int col = 0; col < numCols; col++)
             {
-                // Instantiate tile prefab
                 GameObject tileGO = Instantiate(tilePrefab, rowGO.transform);
-
-                // Set tile position
                 tileGO.transform.localPosition = new Vector3(col, 0, 0);
-
-                // Get Tile component from the instantiated tile GameObject
                 Tile tile = tileGO.GetComponent<Tile>();
-
-                // Set letter for the tile
                 tile.SetLetter(puzzle[row, col]);
-
-                // Set row and column indices
                 tile.rowIndex = row;
                 tile.colIndex = col;
 
-                // Add the tile to the corresponding row
                 rowComponent.tiles[col] = tile;
             }
         }
@@ -88,17 +76,6 @@ public class Board : MonoBehaviour
 
     private void Update()
     {
-    }
-
-    private bool IsCorrectWord(string word)
-    {
-        throw new NotImplementedException();
-    }
-
-    private bool IsValidWord(string word)
-    {
-        //TODO Complete This Method
-        return false;
     }
 
     private bool HasWon()
@@ -116,7 +93,7 @@ public class Board : MonoBehaviour
 
     internal void OnTilePointerEnter(Tile tile)
     {
-        if (isDragging && !selectedTiles.Contains(tile))
+        if (isDragging)
         {
             AddTileToSelection(tile);
         }
@@ -139,11 +116,11 @@ public class Board : MonoBehaviour
             word += tile.GetLetter();
         }
 
-        GameLogic.WordEvaluation wordEvaluation = gameLogic.EvaluateWord(word);
+        GameLogic.WordEvaluation wordEvaluation = gameLogic.Guess(word);
 
         ClearSelection();
 
-        if (wordsGuessed.Contains(word))
+        if (gameLogic.wordsGuessed.Contains(word))
         {
             return;
         }
@@ -151,7 +128,7 @@ public class Board : MonoBehaviour
         if (GameLogic.WordEvaluation.Spangram == wordEvaluation)
         {
             hints += 1;
-            wordsGuessed.Add(word);
+            gameLogic.wordsGuessed.Add(word);
             MarkSpangramWord();
         }
 
@@ -159,44 +136,63 @@ public class Board : MonoBehaviour
         {
 
             hints += 1;
-            wordsGuessed.Add(word);
+            gameLogic.wordsGuessed.Add(word);
             MarkCorrectWord();
         }
         else if (GameLogic.WordEvaluation.Valid == wordEvaluation)
         {
 
             hints += 1;
-            wordsGuessed.Add(word);
+            gameLogic.wordsGuessed.Add(word);
         }
+
+        UpdateGameProgressText();
     }
 
-    private void UpdateSelectedTilesState(Tile.State state)
+    private void UpdateGameProgressText()
     {
-        foreach (Tile tile in selectedTiles)
-        {
-            tile.SetState(state);
-        }
+        gameProgressText.text = $"{gameLogic.PuzzleWordsFound().ToString()} of {gameLogic.PuzzleWordsCount().ToString()} words found";
     }
 
     private void MarkSpangramWord()
     {
-        UpdateSelectedTilesState(spangramState);
+        foreach (Tile tile in selectedTiles)
+        {
+            tile.SetSpangramState();
+        }
     }
 
     private void ClearSelection()
     {
-        UpdateSelectedTilesState(emptyState);
+        foreach (Tile tile in selectedTiles)
+        {
+            tile.SetEmptyState();
+        }
     }
 
     private void MarkCorrectWord()
     {
-        UpdateSelectedTilesState(correctState);
+        foreach (Tile tile in selectedTiles)
+        {
+            tile.SetCorrectState();
+        }
     }
 
 
 
     private void AddTileToSelection(Tile tile)
     {
+        if (selectedTiles.Contains(tile)) {
+            int tileIndex = selectedTiles.IndexOf(tile);
+
+            for (int i = selectedTiles.Count - 1; i > tileIndex; i--)
+            {
+                selectedTiles[i].SetEmptyState();
+                selectedTiles.RemoveAt(i);
+            }
+            return;
+
+        }
         if (selectedTiles.Count > 0)
         {
             Tile lastTile = selectedTiles[selectedTiles.Count - 1];
@@ -206,7 +202,7 @@ public class Board : MonoBehaviour
             }
         }
         selectedTiles.Add(tile);
-        tile.SetState(selectedState);
+        tile.SetSelectedState();
     }
 
     private bool IsAdjacent(Tile lastTile, Tile newTile)

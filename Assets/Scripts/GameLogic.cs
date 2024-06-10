@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,9 +14,14 @@ public class GameLogic : MonoBehaviour
     }
 
 
-    private HashSet<string> correctWords = new HashSet<string>();
+    public HashSet<string> correctWords { get; private set; } = new HashSet<string>();
     private HashSet<string> validWords = new HashSet<string>();
-    private string spangram;
+    public HashSet<string> validWordsGuessed = new HashSet<string>();
+    public HashSet<string> correctWordsGuessed { get; private set; } = new HashSet<string>();
+    public HashSet<string> wordsGuessed { get; private set;} = new HashSet<string>();
+    public string theme { get; private set; }
+    public string spangram { get; private set; }
+    public bool spangramFound { get; private set; }
     public char[,] GeneratePuzzle(int rows, int cols)
     {
 
@@ -27,6 +33,7 @@ public class GameLogic : MonoBehaviour
         correctWords.Add("kappa");
         correctWords.Add("epsilon");
         spangram = "greekletters";
+        theme = "Sorority Signs";
 
         // Placeholder puzzle for testing
         return new char[,]
@@ -38,8 +45,17 @@ public class GameLogic : MonoBehaviour
             { 'e', 'l', 'a', 't', 'p', 'p' },
             { 's', 't', 'e', 't', 'a', 'l' },
             { 'i', 'g', 'r', 'n', 'o', 'i' },
-            { 'a', 's', 's', 'e', 'p', 's' }
+            { 'a', 'm', 's', 'e', 'p', 's' }
         };
+    }
+
+    public int PuzzleWordsCount()
+    {
+        return correctWords.Count + 1;
+    }
+
+    public int PuzzleWordsFound() {
+        return correctWordsGuessed.Count;
     }
 
     public bool IsCorrectdWord(string word)
@@ -52,14 +68,16 @@ public class GameLogic : MonoBehaviour
         return validWords.Contains(word);
     }
 
-    public WordEvaluation EvaluateWord(string word)
+    public WordEvaluation Guess(string word)
     {
         if (word == spangram)
         {
+            spangramFound = true;
             return WordEvaluation.Spangram;
         }
         else if (IsCorrectdWord(word))
         {
+            correctWordsGuessed.Add(word);
             return WordEvaluation.Correct;
         }
         else if (IsValidWord(word))
@@ -71,18 +89,15 @@ public class GameLogic : MonoBehaviour
 
     private void Awake()
     {
-        // Load the text file containing the dictionary of valid words from Resources folder
         TextAsset wordListTextAsset = Resources.Load<TextAsset>("dictionary");
 
         if (wordListTextAsset != null)
         {
-            // Parse the loaded text to extract valid words
             string[] words = wordListTextAsset.text.Split(new char[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
 
-            // Add the valid words to the HashSet
             foreach (string word in words)
             {
-                validWords.Add(word.Trim().ToLower()); // Trim whitespace and convert to lowercase for consistency
+                validWords.Add(word.Trim().ToLower());
             }
         }
         else
