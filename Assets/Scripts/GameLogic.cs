@@ -18,10 +18,12 @@ public class GameLogic : MonoBehaviour
     private HashSet<string> validWords = new HashSet<string>();
     public HashSet<string> validWordsGuessed = new HashSet<string>();
     public HashSet<string> correctWordsGuessed { get; private set; } = new HashSet<string>();
-    public HashSet<string> wordsGuessed { get; private set;} = new HashSet<string>();
+    public HashSet<string> wordsGuessed { get; private set; } = new HashSet<string>();
     public string theme { get; private set; }
     public string spangram { get; private set; }
     public bool spangramFound { get; private set; }
+    public string lastWordGuessed { get; private set; }
+    public WordEvaluation lastWordEvaluation { get; private set; }
     public char[,] GeneratePuzzle(int rows, int cols)
     {
 
@@ -54,8 +56,9 @@ public class GameLogic : MonoBehaviour
         return correctWords.Count + 1;
     }
 
-    public int PuzzleWordsFound() {
-        return correctWordsGuessed.Count;
+    public int PuzzleWordsFound()
+    {
+        return correctWordsGuessed.Count + (spangramFound ? 1 : 0);
     }
 
     public bool IsCorrectdWord(string word)
@@ -70,21 +73,26 @@ public class GameLogic : MonoBehaviour
 
     public WordEvaluation Guess(string word)
     {
+        lastWordGuessed = word;
         if (word == spangram)
         {
             spangramFound = true;
-            return WordEvaluation.Spangram;
+            lastWordEvaluation = WordEvaluation.Spangram;
         }
         else if (IsCorrectdWord(word))
         {
             correctWordsGuessed.Add(word);
-            return WordEvaluation.Correct;
+            lastWordEvaluation = WordEvaluation.Correct;
         }
         else if (IsValidWord(word))
         {
-            return WordEvaluation.Valid;
+            lastWordEvaluation = WordEvaluation.Valid;
         }
-        return WordEvaluation.Invalid;
+        else
+        {
+            lastWordEvaluation = WordEvaluation.Invalid;
+        }
+        return lastWordEvaluation;
     }
 
     private void Awake()

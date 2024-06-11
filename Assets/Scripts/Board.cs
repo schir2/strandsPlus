@@ -11,6 +11,7 @@ public class Board : MonoBehaviour
     public GameObject tilePrefab;
     public TextMeshProUGUI themeValueText;
     public TextMeshProUGUI gameProgressText;
+    public TextMeshProUGUI gameStatusText;
     public int numRows;
     public int numCols;
     private Row[] rows;
@@ -35,6 +36,12 @@ public class Board : MonoBehaviour
         if (themeValueTextObject != null)
         {
             gameProgressText = gameProgressTextObject.GetComponent<TextMeshProUGUI>();
+        }
+
+        GameObject gameStatusTextObject = GameObject.Find("GameStatusText");
+        if (gameStatusTextObject != null)
+        {
+            gameStatusText = gameStatusTextObject.GetComponent<TextMeshProUGUI>();
         }
 
         UpdateGameProgressText();
@@ -149,6 +156,16 @@ public class Board : MonoBehaviour
         UpdateGameProgressText();
     }
 
+    private void UpdateGameStatusText()
+    {
+        string word = "";
+        foreach (Tile tile in selectedTiles)
+        {
+            word += tile.GetLetter();
+        }
+        gameStatusText.text = word;
+    }
+
     private void UpdateGameProgressText()
     {
         gameProgressText.text = $"{gameLogic.PuzzleWordsFound().ToString()} of {gameLogic.PuzzleWordsCount().ToString()} words found";
@@ -182,7 +199,8 @@ public class Board : MonoBehaviour
 
     private void AddTileToSelection(Tile tile)
     {
-        if (selectedTiles.Contains(tile)) {
+        if (selectedTiles.Contains(tile))
+        {
             int tileIndex = selectedTiles.IndexOf(tile);
 
             for (int i = selectedTiles.Count - 1; i > tileIndex; i--)
@@ -190,6 +208,8 @@ public class Board : MonoBehaviour
                 selectedTiles[i].SetEmptyState();
                 selectedTiles.RemoveAt(i);
             }
+            UpdateGameStatusText();
+
             return;
 
         }
@@ -202,6 +222,7 @@ public class Board : MonoBehaviour
             }
         }
         selectedTiles.Add(tile);
+        UpdateGameStatusText();
         tile.SetSelectedState();
     }
 

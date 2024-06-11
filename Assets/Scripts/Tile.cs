@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerUpHandler
+public class Tile : Image, IPointerDownHandler, IPointerEnterHandler, IPointerUpHandler
 {
     [System.Serializable]
     public class State
@@ -106,5 +106,23 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
     internal string GetLetter()
     {
         return this.letter.ToString();
+    }
+
+
+
+    public override bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera)
+    {
+        RectTransform rectTransform = GetComponent<RectTransform>();
+        Vector2 localPoint;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, screenPoint, eventCamera, out localPoint);
+
+        float radius = rectTransform.rect.width * 0.5f; // Assuming the image is square
+        if (localPoint.magnitude <= radius)
+        {
+            return true; // The point is within the circular bounds
+        }
+
+        return false; // The point is outside the circular bounds
     }
 }
