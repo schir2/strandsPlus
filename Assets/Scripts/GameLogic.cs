@@ -17,6 +17,8 @@ public class GameLogic : MonoBehaviour
     public HashSet<string> correctWords { get; private set; } = new HashSet<string>();
     private HashSet<string> validWords = new HashSet<string>();
     public HashSet<string> validWordsGuessed = new HashSet<string>();
+    public int hints { get; private set; } = 0;
+    private int correctGuessCount = 0;
     public HashSet<string> correctWordsGuessed { get; private set; } = new HashSet<string>();
     public HashSet<string> wordsGuessed { get; private set; } = new HashSet<string>();
     public string theme { get; private set; }
@@ -60,6 +62,10 @@ public class GameLogic : MonoBehaviour
     {
         return correctWordsGuessed.Count + (spangramFound ? 1 : 0);
     }
+    public bool IsSpangramWord(string word)
+    {
+        return word == spangram;
+    }
 
     public bool IsCorrectdWord(string word)
     {
@@ -71,22 +77,33 @@ public class GameLogic : MonoBehaviour
         return validWords.Contains(word);
     }
 
+    private void IncrementCorrectGuessCount()
+    {
+        correctGuessCount++;
+    }
+
     public WordEvaluation Guess(string word)
     {
         lastWordGuessed = word;
-        if (word == spangram)
+        if (IsSpangramWord(word))
         {
             spangramFound = true;
             lastWordEvaluation = WordEvaluation.Spangram;
+            IncrementCorrectGuessCount();
         }
         else if (IsCorrectdWord(word))
         {
             correctWordsGuessed.Add(word);
             lastWordEvaluation = WordEvaluation.Correct;
+            IncrementCorrectGuessCount();
         }
         else if (IsValidWord(word))
         {
             lastWordEvaluation = WordEvaluation.Valid;
+            if (!wordsGuessed.Contains(word))
+            {
+                IncrementCorrectGuessCount();
+            }
         }
         else
         {
