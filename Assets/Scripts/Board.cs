@@ -15,6 +15,7 @@ public class Board : MonoBehaviour
     public TextMeshProUGUI gameStatusText;
     public TextMeshProUGUI hintButtonText;
     public TextMeshProUGUI winMessageText;
+    public GameObject gameOptionsContainer;
     public Button startGameButton;
     public Button hintButton;
     public Timer timer;
@@ -44,6 +45,7 @@ public class Board : MonoBehaviour
     public void StartGame()
     {
         startGameButton.gameObject.SetActive(false);
+        gameOptionsContainer.SetActive(false);
         timer.StartTimer();
 
         char[,] puzzle = gameLogic.GeneratePuzzle(numRows, numCols);
