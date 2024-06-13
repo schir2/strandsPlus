@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class Board : MonoBehaviour
     public TextMeshProUGUI themeValueText;
     public TextMeshProUGUI gameProgressText;
     public TextMeshProUGUI gameStatusText;
+    public TextMeshProUGUI hintButtonText;
+    public TextMeshProUGUI winMessageText;
+    public Button startGameButton;
+    public Button hintButton;
+    public Timer timer;
     public int numRows;
     public int numCols;
     private Row[] rows;
@@ -27,33 +33,18 @@ public class Board : MonoBehaviour
     private void Awake()
     {
         rows = new Row[numRows];
-        GameObject themeValueTextObject = GameObject.Find("ThemeValueText");
-        if (themeValueTextObject != null)
-        {
-            themeValueText = themeValueTextObject.GetComponent<TextMeshProUGUI>();
-        }
-        GameObject gameProgressTextObject = GameObject.Find("GameProgressText");
-        if (themeValueTextObject != null)
-        {
-            gameProgressText = gameProgressTextObject.GetComponent<TextMeshProUGUI>();
-        }
-
-        GameObject gameStatusTextObject = GameObject.Find("GameStatusText");
-        if (gameStatusTextObject != null)
-        {
-            gameStatusText = gameStatusTextObject.GetComponent<TextMeshProUGUI>();
-        }
-
         UpdateGameProgressText();
     }
 
     private void Start()
     {
-        NewGame();
+        startGameButton.onClick.AddListener(StartGame);
     }
 
-    public void NewGame()
+    public void StartGame()
     {
+        startGameButton.gameObject.SetActive(false);
+        timer.StartTimer();
 
         char[,] puzzle = gameLogic.GeneratePuzzle(numRows, numCols);
         themeValueText.text = gameLogic.theme;
@@ -83,6 +74,8 @@ public class Board : MonoBehaviour
 
     private void Update()
     {
+
+        UpdateHintText();
     }
 
     private bool HasWon()
@@ -164,6 +157,11 @@ public class Board : MonoBehaviour
             word += tile.GetLetter();
         }
         gameStatusText.text = word;
+    }
+
+    private void UpdateHintText()
+    {
+        hintButtonText.text = $"Hints {gameLogic.hints}";
     }
 
     private void UpdateGameProgressText()
