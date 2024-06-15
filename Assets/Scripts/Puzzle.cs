@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [Serializable]
-public class Puzzle: MonoBehaviour
+public class Puzzle : MonoBehaviour
 
 {
     public enum WordEvaluation
@@ -20,12 +20,15 @@ public class Puzzle: MonoBehaviour
     public string theme { get; private set; }
     public string spangram { get; private set; }
     public Dictionary<string, List<Vector2Int>> wordPositions;
-    public char[,] puzzleGrid;
+    public List<List<string>> puzzleGrid;
 
-
+    [NonSerialized]
     private HashSet<string> validWords = new HashSet<string>();
+
+    [NonSerialized]
     public HashSet<string> validWordsGuessed = new HashSet<string>();
     public int hints { get; private set; } = 0;
+    [NonSerialized]
     private int correctGuessCount = 0;
     public HashSet<string> correctWordsGuessed { get; private set; } = new HashSet<string>();
     public HashSet<string> wordsGuessed { get; private set; } = new HashSet<string>();
@@ -33,7 +36,7 @@ public class Puzzle: MonoBehaviour
     public string lastWordGuessed { get; private set; }
     public WordEvaluation lastWordEvaluation { get; private set; }
 
-    public void Init(string theme, string spangram, List<string> correctWords, char[,] puzzleGrid, Dictionary<string, List<Vector2Int>> wordPositions)
+    public void Init(string theme, string spangram, List<string> correctWords, List<List<string>> puzzleGrid, Dictionary<string, List<Vector2Int>> wordPositions)
     {
         this.theme = theme;
         this.spangram = spangram;
@@ -100,14 +103,4 @@ public class Puzzle: MonoBehaviour
         }
         return lastWordEvaluation;
     }
-}
-
-[Serializable]
-public class PuzzleSerializable
-{
-    public string theme;
-    public string spangram;
-    public List<string> correctWords;
-    public List<List<string>> puzzleGrid;
-    public Dictionary<string, List<List<int>>> wordPositions;
 }

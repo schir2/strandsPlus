@@ -21,7 +21,7 @@ public class Tile : Image, IPointerDownHandler, IPointerEnterHandler, IPointerUp
     public Tile.State spangramState;
 
     public State currentState { get; private set; }
-    public char letter { get; private set; }
+    public string letter { get; private set; }
 
     private Image fill;
     private Outline outline;
@@ -45,10 +45,10 @@ public class Tile : Image, IPointerDownHandler, IPointerEnterHandler, IPointerUp
         }
     }
 
-    public void SetLetter(char letter)
+    public void SetLetter(string letter)
     {
         this.letter = letter;
-        text.text = letter.ToString();
+        text.text = letter;
     }
 
     public void SetState(State state)

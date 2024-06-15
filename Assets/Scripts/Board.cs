@@ -49,10 +49,9 @@ public class Board : MonoBehaviour
         gameOptionsContainer.SetActive(false);
         timer.StartTimer();
 
-        PuzzleManager puzzleManager = new PuzzleManager();
         Puzzle puzzle = puzzleManager.GetTodaysPuzzle();
 
-        themeValueText.text = this.puzzle.theme;
+        themeValueText.text = puzzle.theme;
 
         for (int row = 0; row < numRows; row++)
         {
@@ -66,7 +65,7 @@ public class Board : MonoBehaviour
                 GameObject tileGO = Instantiate(tilePrefab, rowGO.transform);
                 tileGO.transform.localPosition = new Vector3(col, 0, 0);
                 Tile tile = tileGO.GetComponent<Tile>();
-                tile.SetLetter(puzzle.puzzleGrid[row, col]);
+                tile.SetLetter(puzzle.puzzleGrid[row][col]);
                 tile.rowIndex = row;
                 tile.colIndex = col;
 

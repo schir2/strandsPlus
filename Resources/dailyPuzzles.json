@@ -1,19 +1,8 @@
-@ -1,28 +1,16 @@
 {
     "dailyPuzzles": {
-        "2024-06-14": {
-    "dailyPuzzlesList": [
-        {
-            "id": "2024-06-15",
+        "2024-06-15": {
             "theme": "Sorority Signs",
             "spangram": "greekletters",
-            "spangram": "exampleSpangram",
-            "correctWords": ["beta", "sigma", "gamma", "delta", "alpha", "kappa", "epsilon"],
-        },
-        {
-            "id": "2024-06-16",
-            "theme": "Greek Mythology",
-            "spangram": "anotherSpangram",
             "correctWords": ["beta", "sigma", "gamma", "delta", "alpha", "kappa", "epsilon"],
             "puzzleGrid": [
                 ["t", "g", "r", "a", "l", "p"],
@@ -36,5 +25,4 @@
             }
         }
     }
-    ]
 }
