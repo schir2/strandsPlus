@@ -1463,7 +1463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b0cab8d2795a69438e0b6a9d4150eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameLogic: {fileID: 1724094706}
+  puzzle: {fileID: 0}
+  puzzleManager: {fileID: 0}
   rowPrefab: {fileID: 8489520106661624763, guid: 680fe4d25bbe3b3449b0cd9841b5e684, type: 3}
   tilePrefab: {fileID: 163433604771445647, guid: c78e42d80ce4c6e4a8a9fee87eafb921, type: 3}
   themeValueText: {fileID: 58957259}
@@ -1704,6 +1705,64 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -1280}
   m_SizeDelta: {x: 720, y: 72}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1036327552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1036327555}
+  - component: {fileID: 1036327554}
+  - component: {fileID: 1036327553}
+  m_Layer: 0
+  m_Name: PuzzleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1036327553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036327552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f37ec3e5f8a6ea44abb44f589d5b941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1036327554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036327552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 890750ff0434b6b49857777e78bb5c08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dailyPuzzleFileName: dailyPuzzles.json
+--- !u!4 &1036327555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036327552}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 360, y: 640, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1194766636
 GameObject:
   m_ObjectHideFlags: 0
@@ -2142,50 +2201,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1652632236}
   m_CullTransparentMesh: 1
---- !u!1 &1724094705
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1724094707}
-  - component: {fileID: 1724094706}
-  m_Layer: 0
-  m_Name: GameLogic
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1724094706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1724094705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f37ec3e5f8a6ea44abb44f589d5b941, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1724094707
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1724094705}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 155.76135, y: 783.5602, z: 0.47806486}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1881207863
 GameObject:
   m_ObjectHideFlags: 0
@@ -2971,4 +2986,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 821352672}
   - {fileID: 1466663593}
-  - {fileID: 1724094707}
+  - {fileID: 1036327555}

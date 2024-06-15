@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class Board : MonoBehaviour
 {
 
-    public GameLogic gameLogic;
+    public Puzzle puzzle;
+    public PuzzleManager puzzleManager;
     public GameObject rowPrefab;
     public GameObject tilePrefab;
     public TextMeshProUGUI themeValueText;
@@ -48,8 +49,10 @@ public class Board : MonoBehaviour
         gameOptionsContainer.SetActive(false);
         timer.StartTimer();
 
-        char[,] puzzle = gameLogic.GeneratePuzzle(numRows, numCols);
-        themeValueText.text = gameLogic.theme;
+        PuzzleManager puzzleManager = new PuzzleManager();
+        Puzzle puzzle = puzzleManager.GetTodaysPuzzle();
+
+        themeValueText.text = this.puzzle.theme;
 
         for (int row = 0; row < numRows; row++)
         {
@@ -63,7 +66,7 @@ public class Board : MonoBehaviour
                 GameObject tileGO = Instantiate(tilePrefab, rowGO.transform);
                 tileGO.transform.localPosition = new Vector3(col, 0, 0);
                 Tile tile = tileGO.GetComponent<Tile>();
-                tile.SetLetter(puzzle[row, col]);
+                tile.SetLetter(puzzle.puzzleGrid[row, col]);
                 tile.rowIndex = row;
                 tile.colIndex = col;
 
@@ -118,34 +121,34 @@ public class Board : MonoBehaviour
             word += tile.GetLetter();
         }
 
-        GameLogic.WordEvaluation wordEvaluation = gameLogic.Guess(word);
+        Puzzle.WordEvaluation wordEvaluation = puzzle.Guess(word);
 
         ClearSelection();
 
-        if (gameLogic.wordsGuessed.Contains(word))
+        if (puzzle.wordsGuessed.Contains(word))
         {
             return;
         }
 
-        if (GameLogic.WordEvaluation.Spangram == wordEvaluation)
+        if (Puzzle.WordEvaluation.Spangram == wordEvaluation)
         {
             hints += 1;
-            gameLogic.wordsGuessed.Add(word);
+            puzzle.wordsGuessed.Add(word);
             MarkSpangramWord();
         }
 
-        else if (GameLogic.WordEvaluation.Correct == wordEvaluation)
+        else if (Puzzle.WordEvaluation.Correct == wordEvaluation)
         {
 
             hints += 1;
-            gameLogic.wordsGuessed.Add(word);
+            puzzle.wordsGuessed.Add(word);
             MarkCorrectWord();
         }
-        else if (GameLogic.WordEvaluation.Valid == wordEvaluation)
+        else if (Puzzle.WordEvaluation.Valid == wordEvaluation)
         {
 
             hints += 1;
-            gameLogic.wordsGuessed.Add(word);
+            puzzle.wordsGuessed.Add(word);
         }
 
         UpdateGameProgressText();
@@ -163,12 +166,12 @@ public class Board : MonoBehaviour
 
     private void UpdateHintText()
     {
-        hintButtonText.text = $"Hints {gameLogic.hints}";
+        hintButtonText.text = $"Hints {puzzle.hints}";
     }
 
     private void UpdateGameProgressText()
     {
-        gameProgressText.text = $"{gameLogic.PuzzleWordsFound().ToString()} of {gameLogic.PuzzleWordsCount().ToString()} words found";
+        gameProgressText.text = $"{puzzle.PuzzleWordsFound().ToString()} of {puzzle.PuzzleWordsCount().ToString()} words found";
     }
 
     private void MarkSpangramWord()
