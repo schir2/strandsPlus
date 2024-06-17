@@ -1,40 +1,68 @@
-@ -1,28 +1,16 @@
 {
-    "dailyPuzzles": {
-        "2024-06-14": {
-    "dailyPuzzlesList": [
-        {
-            "id": "2024-06-15",
-            "theme": "Sorority Signs",
-            "spangram": "greekletters",
-            "spangram": "exampleSpangram",
-            "correctWords": ["beta", "sigma", "gamma", "delta", "alpha", "kappa", "epsilon"],
-        },
-        {
-            "id": "2024-06-16",
-            "theme": "Greek Mythology",
-            "spangram": "anotherSpangram",
-            "correctWords": ["beta", "sigma", "gamma", "delta", "alpha", "kappa", "epsilon"],
-            "puzzleGrid": [
-                ["t", "g", "r", "a", "l", "p"],
-                ["a", "e", "e", "e", "k", "h"],
-                ["b", "a", "m", "m", "l", "a"],
-                ["d", "g", "a", "e", "k", "a"],
-                ["e", "l", "a", "t", "p", "p"],
-                ["s", "t", "e", "t", "a", "l"],
-                ["i", "g", "r", "n", "o", "i"],
-                ["a", "m", "s", "e", "p", "s"]
+    "2024-06-16": {
+        "theme": "Greek Mythology",
+        "spangram": "anotherSpangram",
+        "correctWords": [ "beta", "sigma", "gamma", "delta", "alpha", "kappa", "epsilon" ],
+        "puzzleGrid": [
+            [ "t", "g", "r", "a", "l", "p" ],
+            [ "a", "e", "e", "e", "k", "h" ],
+            [ "b", "a", "m", "m", "l", "a" ],
+            [ "d", "g", "a", "e", "k", "a" ],
+            [ "e", "l", "a", "t", "p", "p" ],
+            [ "s", "t", "e", "t", "a", "l" ],
+            [ "i", "g", "r", "n", "o", "i" ],
+            [ "a", "m", "s", "e", "p", "s" ]
+        ],
+        "wordPositions": {
+            "beta": [
+                [ 2, 0 ],
+                [ 2, 1 ],
+                [ 2, 2 ],
+                [ 2, 3 ]
             ],
-            "wordPositions": {
-                "beta": [[2, 0], [2, 1], [2, 2], [2, 3]],
-                "sigma": [[1, 0], [2, 0], [3, 0], [4, 0], [5, 0]],
-                "gamma": [[2, 2], [2, 3], [2, 4], [2, 5], [2, 6]],
-                "delta": [[3, 0], [3, 1], [3, 2], [3, 3], [3, 4]],
-                "alpha": [[4, 0], [4, 1], [4, 2], [4, 3], [4, 4]],
-                "kappa": [[5, 0], [5, 1], [5, 2], [5, 3], [5, 4]],
-                "epsilon": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [6, 5]]
-            }
+            "sigma": [
+                [ 1, 0 ],
+                [ 2, 0 ],
+                [ 3, 0 ],
+                [ 4, 0 ],
+                [ 5, 0 ]
+            ],
+            "gamma": [
+                [ 2, 2 ],
+                [ 2, 3 ],
+                [ 2, 4 ],
+                [ 2, 5 ],
+                [ 2, 6 ]
+            ],
+            "delta": [
+                [ 3, 0 ],
+                [ 3, 1 ],
+                [ 3, 2 ],
+                [ 3, 3 ],
+                [ 3, 4 ]
+            ],
+            "alpha": [
+                [ 4, 0 ],
+                [ 4, 1 ],
+                [ 4, 2 ],
+                [ 4, 3 ],
+                [ 4, 4 ]
+            ],
+            "kappa": [
+                [ 5, 0 ],
+                [ 5, 1 ],
+                [ 5, 2 ],
+                [ 5, 3 ],
+                [ 5, 4 ]
+            ],
+            "epsilon": [
+                [ 6, 0 ],
+                [ 6, 1 ],
+                [ 6, 2 ],
+                [ 6, 3 ],
+                [ 6, 4 ],
+                [ 6, 5 ]
+            ]
         }
     }
-    ]
 }
