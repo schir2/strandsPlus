@@ -65,18 +65,19 @@ public class PuzzleManager : MonoBehaviour
     public Puzzle GetTodaysPuzzle()
     {
         string today = DateTime.Now.ToString("yyyy-MM-dd");
+        PuzzleData data;
+
         if (dailyPuzzles.ContainsKey(today))
         {
-            PuzzleData data = dailyPuzzles[today];
-            Puzzle currentPuzzle = new Puzzle();
-            currentPuzzle.Init(data);
-            return currentPuzzle;
+            data = dailyPuzzles[today];
         }
         else
         {
-            Debug.LogError("Puzzle for today's date not found!");
-            return null;
+            data = dailyPuzzles["2024-06-16"];
         }
+        currentPuzzle = new Puzzle();
+        currentPuzzle.Init(data);
+        return currentPuzzle;
     }
 
     public Puzzle GetCurrentPuzzle()

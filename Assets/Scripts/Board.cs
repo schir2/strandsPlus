@@ -12,9 +12,6 @@ public class Board : MonoBehaviour
     public TextMeshProUGUI gameProgressText;
     public TextMeshProUGUI gameStatusText;
     public TextMeshProUGUI hintButtonText;
-    public TextMeshProUGUI winMessageText;
-    public GameObject gameOptionsContainer;
-    public Button startGameButton;
     public Button hintButton;
     public Timer timer;
     public Puzzle puzzle;
@@ -37,14 +34,10 @@ public class Board : MonoBehaviour
 
     private void Start()
     {
-        startGameButton.onClick.AddListener(StartGame);
     }
 
     public void SetupBoard(Puzzle puzzle)
     {
-        startGameButton.gameObject.SetActive(false);
-        gameOptionsContainer.SetActive(false);
-        timer.StartTimer(); 
         themeValueText.text = puzzle.data.theme;
 
         for (int row = 0; row < numRows; row++)
@@ -67,12 +60,8 @@ public class Board : MonoBehaviour
             }
         }
 
-    }
+        timer.StartTimer();
 
-    public void StartGame()
-    {
-        puzzle = PuzzleManager.Instance.GetTodaysPuzzle();
-        SetupBoard(puzzle);
     }
 
 

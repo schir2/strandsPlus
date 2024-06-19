@@ -53,4 +53,10 @@ public class GameModeManager : MonoBehaviour
         currentGameMode = new GameMode("Custom", options);
         Debug.Log("Custom game mode set.");
     }
+
+    public void ApplyDefaultGameMode()
+    {
+        currentGameMode = gameModes["Standard"];
+        Debug.Log("Standard game mode applied.");
+    }
 }

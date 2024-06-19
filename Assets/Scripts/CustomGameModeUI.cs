@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class CustomGameModeUI : MonoBehaviour
 {
     public Toggle timeTrialToggle;
-    public Toggle timedToggle;
     public Toggle HintsToggle;
     public Toggle onlyCorrectWordsToggle;
 
