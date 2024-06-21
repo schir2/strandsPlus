@@ -1,15 +1,31 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class PuzzleManager : MonoBehaviour
 {
-    public Dictionary<string, Puzzle> dailyPuzzles;
-    public string dailyPuzzleFileName = "dailyPuzzles.json";
+    public static PuzzleManager Instance { get; private set; }
 
-    void Start()
+    private Dictionary<string, PuzzleData> dailyPuzzles;
+    public HashSet<string> validWords { get; private set; } = new HashSet<string>();
+    public string dailyPuzzleFileName = "dailyPuzzles.json";
+    public Puzzle currentPuzzle { get; private set; }
+
+
+    private void Awake()
     {
-        LoadDailyPuzzles();
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            LoadValidWords();
+            LoadDailyPuzzles();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void LoadDailyPuzzles()
@@ -18,8 +34,7 @@ public class PuzzleManager : MonoBehaviour
         if (jsonFile != null)
         {
             string json = jsonFile.text;
-            dailyPuzzles = JsonUtility.FromJson<Dictionary<string, Puzzle>>(json);
-            Debug.Log(dailyPuzzles);
+            dailyPuzzles = JsonConvert.DeserializeObject<Dictionary<string, PuzzleData>>(json);
         }
         else
         {
@@ -27,31 +42,56 @@ public class PuzzleManager : MonoBehaviour
         }
     }
 
-    public Puzzle GetTodaysPuzzle()
+    void LoadValidWords()
     {
-        string today = DateTime.Now.ToString("yyyy-MM-dd");
-        if (dailyPuzzles.ContainsKey(today))
+        TextAsset wordListTextAsset = Resources.Load<TextAsset>("dictionary");
+
+        if (wordListTextAsset != null)
         {
-            return dailyPuzzles[today];
+            string[] words = wordListTextAsset.text.Split(new char[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string word in words)
+            {
+                validWords.Add(word.Trim().ToLower());
+            }
         }
         else
         {
-            Debug.LogError("Puzzle for today's date not found!");
-            return null;
+            Debug.LogError("Failed to load valid word list!");
         }
+
+    }
+
+    public Puzzle GetTodaysPuzzle()
+    {
+        string today = DateTime.Now.ToString("yyyy-MM-dd");
+        PuzzleData data;
+
+        if (dailyPuzzles.ContainsKey(today))
+        {
+            data = dailyPuzzles[today];
+        }
+        else
+        {
+            data = dailyPuzzles["2024-06-16"];
+        }
+        currentPuzzle = new Puzzle();
+        currentPuzzle.Init(data);
+        return currentPuzzle;
+    }
+
+    public Puzzle GetCurrentPuzzle()
+    {
+        if (currentPuzzle == null)
+        {
+            Debug.LogError("No current puzzle is set!");
+        }
+        return currentPuzzle;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
 
-
-
-    [Serializable]
-    private class Wrapper
-    {
-        public Dictionary<string, Puzzle> dailyPuzzles;
     }
 }

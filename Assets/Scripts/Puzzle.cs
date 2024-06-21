@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [Serializable]
-public class Puzzle : MonoBehaviour
-
+public class Puzzle
 {
     public enum WordEvaluation
     {
@@ -14,93 +12,92 @@ public class Puzzle : MonoBehaviour
         Valid,
         Invalid
     }
+    public PuzzleData data;
+    public PuzzleState state = new PuzzleState();
 
-
-    public List<string> correctWords { get; private set; } = new List<string>();
-    public string theme { get; private set; }
-    public string spangram { get; private set; }
-    public Dictionary<string, List<Vector2Int>> wordPositions;
-    public List<List<string>> puzzleGrid;
-
-    [NonSerialized]
-    private HashSet<string> validWords = new HashSet<string>();
-
-    [NonSerialized]
-    public HashSet<string> validWordsGuessed = new HashSet<string>();
-    public int hints { get; private set; } = 0;
-    [NonSerialized]
-    private int correctGuessCount = 0;
-    public HashSet<string> correctWordsGuessed { get; private set; } = new HashSet<string>();
-    public HashSet<string> wordsGuessed { get; private set; } = new HashSet<string>();
-    public bool spangramFound { get; private set; }
-    public string lastWordGuessed { get; private set; }
-    public WordEvaluation lastWordEvaluation { get; private set; }
-
-    public void Init(string theme, string spangram, List<string> correctWords, List<List<string>> puzzleGrid, Dictionary<string, List<Vector2Int>> wordPositions)
+    public void Init(PuzzleData data)
     {
-        this.theme = theme;
-        this.spangram = spangram;
-        this.correctWords = correctWords;
-        this.puzzleGrid = puzzleGrid;
-        this.wordPositions = wordPositions;
+        this.data = data;
     }
 
     public int PuzzleWordsCount()
     {
-        return correctWords.Count + 1;
+        return data.correctWords.Count + 1;
     }
 
     public int PuzzleWordsFound()
     {
-        return correctWordsGuessed.Count + (spangramFound ? 1 : 0);
+        return state.correctWordsGuessed.Count + (state.spangramFound ? 1 : 0);
     }
     public bool IsSpangramWord(string word)
     {
-        return word == spangram;
+        return word == data.spangram;
     }
 
     public bool IsCorrectdWord(string word)
     {
-        return correctWords.Contains(word);
+        return data.correctWords.Contains(word);
     }
 
     private bool IsValidWord(string word)
     {
-        return validWords.Contains(word);
+        return PuzzleManager.Instance.validWords.Contains(word);
     }
 
     private void IncrementCorrectGuessCount()
     {
-        correctGuessCount++;
+        state.correctGuessCount++;
     }
 
     public WordEvaluation Guess(string word)
     {
-        lastWordGuessed = word;
+        state.lastWordGuessed = word;
         if (IsSpangramWord(word))
         {
-            spangramFound = true;
-            lastWordEvaluation = WordEvaluation.Spangram;
+            state.spangramFound = true;
+            state.lastWordEvaluation = WordEvaluation.Spangram;
             IncrementCorrectGuessCount();
         }
         else if (IsCorrectdWord(word))
         {
-            correctWordsGuessed.Add(word);
-            lastWordEvaluation = WordEvaluation.Correct;
+            state.correctWordsGuessed.Add(word);
+            state.lastWordEvaluation = WordEvaluation.Correct;
             IncrementCorrectGuessCount();
         }
         else if (IsValidWord(word))
         {
-            lastWordEvaluation = WordEvaluation.Valid;
-            if (!wordsGuessed.Contains(word))
+            state.lastWordEvaluation = WordEvaluation.Valid;
+            if (!state.wordsGuessed.Contains(word))
             {
                 IncrementCorrectGuessCount();
             }
         }
         else
         {
-            lastWordEvaluation = WordEvaluation.Invalid;
+            state.lastWordEvaluation = WordEvaluation.Invalid;
         }
-        return lastWordEvaluation;
+        return state.lastWordEvaluation;
     }
+}
+
+public class PuzzleData
+{
+    public string theme;
+    public string spangram;
+    public List<string> correctWords;
+    public Dictionary<string, List<List<int>>> wordPositions;
+    public List<List<string>> puzzleGrid;
+}
+
+public class PuzzleState
+{
+    public HashSet<string> validWordsGuessed = new HashSet<string>();
+    public int hints = 0;
+    public int correctGuessCount = 0;
+    public HashSet<string> correctWordsGuessed = new HashSet<string>();
+    public HashSet<string> wordsGuessed = new HashSet<string>();
+    public bool spangramFound = false;
+    public string lastWordGuessed;
+    public Puzzle.WordEvaluation lastWordEvaluation;
+
 }

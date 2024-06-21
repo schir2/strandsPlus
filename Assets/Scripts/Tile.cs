@@ -15,10 +15,10 @@ public class Tile : Image, IPointerDownHandler, IPointerEnterHandler, IPointerUp
     }
 
     [Header("Tiles")]
-    public Tile.State emptyState;
-    public Tile.State selectedState;
-    public Tile.State correctState;
-    public Tile.State spangramState;
+    public State emptyState;
+    public State selectedState;
+    public State correctState;
+    public State spangramState;
 
     public State currentState { get; private set; }
     public string letter { get; private set; }

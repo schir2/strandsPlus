@@ -6,20 +6,15 @@ using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
-
-    public Puzzle puzzle;
-    public PuzzleManager puzzleManager;
     public GameObject rowPrefab;
     public GameObject tilePrefab;
     public TextMeshProUGUI themeValueText;
     public TextMeshProUGUI gameProgressText;
     public TextMeshProUGUI gameStatusText;
     public TextMeshProUGUI hintButtonText;
-    public TextMeshProUGUI winMessageText;
-    public GameObject gameOptionsContainer;
-    public Button startGameButton;
     public Button hintButton;
     public Timer timer;
+    public Puzzle puzzle;
     public int numRows;
     public int numCols;
     private Row[] rows;
@@ -35,23 +30,15 @@ public class Board : MonoBehaviour
     private void Awake()
     {
         rows = new Row[numRows];
-        UpdateGameProgressText();
     }
 
     private void Start()
     {
-        startGameButton.onClick.AddListener(StartGame);
     }
 
-    public void StartGame()
+    public void SetupBoard(Puzzle puzzle)
     {
-        startGameButton.gameObject.SetActive(false);
-        gameOptionsContainer.SetActive(false);
-        timer.StartTimer();
-
-        Puzzle puzzle = puzzleManager.GetTodaysPuzzle();
-
-        themeValueText.text = puzzle.theme;
+        themeValueText.text = puzzle.data.theme;
 
         for (int row = 0; row < numRows; row++)
         {
@@ -65,13 +52,15 @@ public class Board : MonoBehaviour
                 GameObject tileGO = Instantiate(tilePrefab, rowGO.transform);
                 tileGO.transform.localPosition = new Vector3(col, 0, 0);
                 Tile tile = tileGO.GetComponent<Tile>();
-                tile.SetLetter(puzzle.puzzleGrid[row][col]);
+                tile.SetLetter(puzzle.data.puzzleGrid[row][col]);
                 tile.rowIndex = row;
                 tile.colIndex = col;
 
                 rowComponent.tiles[col] = tile;
             }
         }
+
+        timer.StartTimer();
 
     }
 
@@ -124,7 +113,7 @@ public class Board : MonoBehaviour
 
         ClearSelection();
 
-        if (puzzle.wordsGuessed.Contains(word))
+        if (puzzle.state.wordsGuessed.Contains(word))
         {
             return;
         }
@@ -132,7 +121,7 @@ public class Board : MonoBehaviour
         if (Puzzle.WordEvaluation.Spangram == wordEvaluation)
         {
             hints += 1;
-            puzzle.wordsGuessed.Add(word);
+            puzzle.state.wordsGuessed.Add(word);
             MarkSpangramWord();
         }
 
@@ -140,14 +129,14 @@ public class Board : MonoBehaviour
         {
 
             hints += 1;
-            puzzle.wordsGuessed.Add(word);
+            puzzle.state.wordsGuessed.Add(word);
             MarkCorrectWord();
         }
         else if (Puzzle.WordEvaluation.Valid == wordEvaluation)
         {
 
             hints += 1;
-            puzzle.wordsGuessed.Add(word);
+            puzzle.state.wordsGuessed.Add(word);
         }
 
         UpdateGameProgressText();
@@ -165,7 +154,7 @@ public class Board : MonoBehaviour
 
     private void UpdateHintText()
     {
-        hintButtonText.text = $"Hints {puzzle.hints}";
+        hintButtonText.text = $"Hints {puzzle.state.hints}";
     }
 
     private void UpdateGameProgressText()
