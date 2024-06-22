@@ -49,14 +49,7 @@ public class Board : MonoBehaviour
             rows[row] = rowComponent;
             for (int col = 0; col < numCols; col++)
             {
-                GameObject tileGO = Instantiate(tilePrefab, rowGO.transform);
-                tileGO.transform.localPosition = new Vector3(col, 0, 0);
-                Tile tile = tileGO.GetComponent<Tile>();
-                tile.SetLetter(puzzle.data.puzzleGrid[row][col]);
-                tile.rowIndex = row;
-                tile.colIndex = col;
-
-                rowComponent.tiles[col] = tile;
+                rowComponent.tiles[col] = Tile.CreateTile(tilePrefab, rowGO.transform, row, col, puzzle.data.puzzleGrid[row][col]);
             }
         }
 
@@ -109,7 +102,7 @@ public class Board : MonoBehaviour
             word += tile.GetLetter();
         }
 
-        Puzzle.WordEvaluation wordEvaluation = puzzle.Guess(word);
+        Puzzle.GuessResult wordEvaluation = puzzle.Guess(word);
 
         ClearSelection();
 
@@ -118,21 +111,21 @@ public class Board : MonoBehaviour
             return;
         }
 
-        if (Puzzle.WordEvaluation.Spangram == wordEvaluation)
+        if (Puzzle.GuessResult.Spangram == wordEvaluation)
         {
             hints += 1;
             puzzle.state.wordsGuessed.Add(word);
             MarkSpangramWord();
         }
 
-        else if (Puzzle.WordEvaluation.Correct == wordEvaluation)
+        else if (Puzzle.GuessResult.Correct == wordEvaluation)
         {
 
             hints += 1;
             puzzle.state.wordsGuessed.Add(word);
             MarkCorrectWord();
         }
-        else if (Puzzle.WordEvaluation.Valid == wordEvaluation)
+        else if (Puzzle.GuessResult.Valid == wordEvaluation)
         {
 
             hints += 1;
@@ -159,7 +152,7 @@ public class Board : MonoBehaviour
 
     private void UpdateGameProgressText()
     {
-        gameProgressText.text = $"{puzzle.PuzzleWordsFound().ToString()} of {puzzle.PuzzleWordsCount().ToString()} words found";
+        gameProgressText.text = $"{puzzle.state.PuzzleWordsFound().ToString()} of {puzzle.data.PuzzleWordsCount().ToString()} words found";
     }
 
     private void MarkSpangramWord()

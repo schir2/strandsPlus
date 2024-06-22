@@ -76,7 +76,7 @@ public class PuzzleManager : MonoBehaviour
             data = dailyPuzzles["2024-06-16"];
         }
         currentPuzzle = new Puzzle();
-        currentPuzzle.Init(data);
+        currentPuzzle.Init(data, validWords);
         return currentPuzzle;
     }
 

@@ -1,10 +1,11 @@
+
 using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Tile : Image, IPointerDownHandler, IPointerEnterHandler, IPointerUpHandler
+public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerUpHandler
 {
     [System.Serializable]
     public class State
@@ -25,19 +26,21 @@ public class Tile : Image, IPointerDownHandler, IPointerEnterHandler, IPointerUp
 
     private Image fill;
     private Outline outline;
-    private TextMeshProUGUI text;
-    private Board board;
+    public TextMeshProUGUI text;
     private CanvasGroup canvasGroup;
 
     internal int rowIndex;
     internal int colIndex;
+
+    public static event Action<Tile, PointerEventData> OnTilePointerDownEvent;
+    public static event Action<Tile, PointerEventData> OnTilePointerEnterEvent;
+    public static event Action<Tile> OnTilePointerUpEvent;
 
     private void Awake()
     {
         fill = GetComponent<Image>();
         outline = GetComponent<Outline>();
         text = GetComponentInChildren<TextMeshProUGUI>();
-        board = GetComponentInParent<Board>();
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {
@@ -45,10 +48,28 @@ public class Tile : Image, IPointerDownHandler, IPointerEnterHandler, IPointerUp
         }
     }
 
-    public void SetLetter(string letter)
+    public static Tile CreateTile(GameObject tilePrefab, Transform parent, int row, int col, string letter)
     {
-        this.letter = letter;
-        text.text = letter;
+        if (tilePrefab == null)
+        {
+            Debug.LogError("Tile prefab is not set.");
+            return null;
+        }
+
+        GameObject tileGameObject = Instantiate(tilePrefab, parent);
+        tileGameObject.transform.localPosition = new Vector3(col, -row, 0); // Adjust for your layout
+        Tile tile = tileGameObject.GetComponent<Tile>();
+        tile.SetLetter(letter);
+        tile.rowIndex = row;
+        tile.colIndex = col;
+        return tile;
+    }
+
+
+    public void SetLetter(string newLetter)
+    {
+        letter = newLetter;
+        text.text = newLetter;
     }
 
     public void SetState(State state)
@@ -83,7 +104,7 @@ public class Tile : Image, IPointerDownHandler, IPointerEnterHandler, IPointerUp
     {
         if (canvasGroup.interactable)
         {
-            board.OnTilePointerDown(this);
+            OnTilePointerDownEvent?.Invoke(this, eventData);
         }
     }
 
@@ -91,7 +112,7 @@ public class Tile : Image, IPointerDownHandler, IPointerEnterHandler, IPointerUp
     {
         if (canvasGroup.interactable)
         {
-            board.OnTilePointerEnter(this);
+            OnTilePointerEnterEvent?.Invoke(this, eventData);
         }
     }
 
@@ -99,30 +120,12 @@ public class Tile : Image, IPointerDownHandler, IPointerEnterHandler, IPointerUp
     {
         if (canvasGroup.interactable)
         {
-            board.OnTilePointerUp();
+            OnTilePointerUpEvent?.Invoke(this);
         }
     }
 
     internal string GetLetter()
     {
         return this.letter.ToString();
-    }
-
-
-
-    public override bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera)
-    {
-        RectTransform rectTransform = GetComponent<RectTransform>();
-        Vector2 localPoint;
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, screenPoint, eventCamera, out localPoint);
-
-        float radius = rectTransform.rect.width * 0.5f; // Assuming the image is square
-        if (localPoint.magnitude <= radius)
-        {
-            return true; // The point is within the circular bounds
-        }
-
-        return false; // The point is outside the circular bounds
     }
 }

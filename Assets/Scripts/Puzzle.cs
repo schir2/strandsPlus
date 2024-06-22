@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class Puzzle
 {
-    public enum WordEvaluation
+    public enum GuessResult
     {
         Spangram,
         Correct,
@@ -13,21 +12,13 @@ public class Puzzle
         Invalid
     }
     public PuzzleData data;
+    public HashSet<string> validWords;
     public PuzzleState state = new PuzzleState();
 
-    public void Init(PuzzleData data)
+    public void Init(PuzzleData data, HashSet<string> validWords)
     {
         this.data = data;
-    }
-
-    public int PuzzleWordsCount()
-    {
-        return data.correctWords.Count + 1;
-    }
-
-    public int PuzzleWordsFound()
-    {
-        return state.correctWordsGuessed.Count + (state.spangramFound ? 1 : 0);
+        this.validWords = validWords;
     }
     public bool IsSpangramWord(string word)
     {
@@ -39,65 +30,39 @@ public class Puzzle
         return data.correctWords.Contains(word);
     }
 
-    private bool IsValidWord(string word)
+    public bool IsValidWord(string word)
     {
-        return PuzzleManager.Instance.validWords.Contains(word);
+        return validWords.Contains(word);
     }
 
-    private void IncrementCorrectGuessCount()
-    {
-        state.correctGuessCount++;
-    }
-
-    public WordEvaluation Guess(string word)
+    public GuessResult Guess(string word)
     {
         state.lastWordGuessed = word;
+
         if (IsSpangramWord(word))
         {
             state.spangramFound = true;
-            state.lastWordEvaluation = WordEvaluation.Spangram;
-            IncrementCorrectGuessCount();
+            state.lastGuessResult = GuessResult.Spangram;
+            state.IncrementCorrectGuessCount();
         }
         else if (IsCorrectdWord(word))
         {
             state.correctWordsGuessed.Add(word);
-            state.lastWordEvaluation = WordEvaluation.Correct;
-            IncrementCorrectGuessCount();
+            state.lastGuessResult = GuessResult.Correct;
+            state.IncrementCorrectGuessCount();
         }
         else if (IsValidWord(word))
         {
-            state.lastWordEvaluation = WordEvaluation.Valid;
+            state.lastGuessResult = GuessResult.Valid;
             if (!state.wordsGuessed.Contains(word))
             {
-                IncrementCorrectGuessCount();
+                state.IncrementCorrectGuessCount();
             }
         }
         else
         {
-            state.lastWordEvaluation = WordEvaluation.Invalid;
+            state.lastGuessResult = GuessResult.Invalid;
         }
-        return state.lastWordEvaluation;
+        return state.lastGuessResult;
     }
-}
-
-public class PuzzleData
-{
-    public string theme;
-    public string spangram;
-    public List<string> correctWords;
-    public Dictionary<string, List<List<int>>> wordPositions;
-    public List<List<string>> puzzleGrid;
-}
-
-public class PuzzleState
-{
-    public HashSet<string> validWordsGuessed = new HashSet<string>();
-    public int hints = 0;
-    public int correctGuessCount = 0;
-    public HashSet<string> correctWordsGuessed = new HashSet<string>();
-    public HashSet<string> wordsGuessed = new HashSet<string>();
-    public bool spangramFound = false;
-    public string lastWordGuessed;
-    public Puzzle.WordEvaluation lastWordEvaluation;
-
 }
