@@ -65,4 +65,20 @@ public class Puzzle
         }
         return state.lastGuessResult;
     }
+
+    public List<List<int>> RevealWord()
+    {
+        if (state.hints > 0)
+        {
+            foreach (string word in data.correctWords)
+            {
+                if (!state.correctWordsGuessed.Contains(word))
+                {
+                    state.hints--;
+                    return data.wordPositions[word];
+                }
+            }
+        }
+        return null;
+    }
 }
