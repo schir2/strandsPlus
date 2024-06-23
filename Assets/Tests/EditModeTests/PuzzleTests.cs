@@ -96,4 +96,33 @@ public class PuzzleTests
         Assert.IsTrue(puzzle.IsValidWord("valid"));
         Assert.IsFalse(puzzle.IsValidWord("invalid"));
     }
+
+    [Test]
+    public void TestGuess()
+    {
+        Assert.AreEqual(puzzle.Guess("beta"), Puzzle.GuessResult.Correct);
+        Assert.AreEqual(puzzle.Guess("betax"), Puzzle.GuessResult.Invalid);
+        Assert.AreEqual(puzzle.Guess("greekletters"), Puzzle.GuessResult.Spangram);
+        Assert.AreEqual(puzzle.Guess("valid"), Puzzle.GuessResult.Valid);
+    }
+
+    [Test]
+    public void TestRevealWord()
+    {
+        puzzle.state.hints = 0;
+        Assert.AreEqual(null, puzzle.RevealWord());
+        Assert.AreEqual(puzzle.state.hints, 0);
+
+        puzzle.state.hints++;
+        Assert.AreEqual(puzzle.data.wordPositions[puzzle.data.correctWords[0]],puzzle.RevealWord());
+        Assert.AreEqual(puzzle.state.hints, 0);
+
+        puzzle.Guess(puzzle.data.correctWords[0]);
+        Assert.AreEqual(puzzle.state.hints, 0);
+        Assert.AreEqual(null, puzzle.RevealWord());
+        puzzle.state.hints++;
+        Assert.AreEqual(puzzle.data.wordPositions[puzzle.data.correctWords[1]], puzzle.RevealWord());
+    }
+
+
 }
