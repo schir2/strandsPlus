@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 0b0cab8d2795a69438e0b6a9d4150eb5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - rowPrefab: {fileID: 8489520106661624763, guid: 680fe4d25bbe3b3449b0cd9841b5e684, type: 3}
+  - tilePrefab: {fileID: 163433604771445647, guid: c78e42d80ce4c6e4a8a9fee87eafb921, type: 3}
+  - themeValueText: {instanceID: 0}
+  - gameProgressText: {instanceID: 0}
+  - gameStatusText: {instanceID: 0}
+  - hintButtonText: {instanceID: 0}
+  - hintButton: {instanceID: 0}
+  - timer: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
