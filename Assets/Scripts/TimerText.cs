@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using TMPro;
 using UnityEngine;
 
-public class Timer : MonoBehaviour
+public class TimerText : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     public float elapsedTime { get; private set; }
