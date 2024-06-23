@@ -112,7 +112,7 @@ public class TileTests
     {
         // Arrange
         bool eventTriggered = false;
-        Tile.OnTilePointerUpEvent += (t) => eventTriggered = true;
+        Tile.OnTilePointerUpEvent += (t, e) => eventTriggered = true;
 
         // Act
         var eventData = new PointerEventData(EventSystem.current);
@@ -122,6 +122,6 @@ public class TileTests
         Assert.IsTrue(eventTriggered);
 
         // Cleanup
-        Tile.OnTilePointerUpEvent -= (t) => eventTriggered = true;
+        Tile.OnTilePointerUpEvent -= (t, e) => eventTriggered = true;
     }
 }
