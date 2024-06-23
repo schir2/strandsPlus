@@ -20,6 +20,7 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
     public State selectedState;
     public State correctState;
     public State spangramState;
+    public State highlightedState;
 
     public State currentState { get; private set; }
     public string letter { get; private set; }
@@ -34,7 +35,7 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
 
     public static event Action<Tile, PointerEventData> OnTilePointerDownEvent;
     public static event Action<Tile, PointerEventData> OnTilePointerEnterEvent;
-    public static event Action<Tile> OnTilePointerUpEvent;
+    public static event Action<Tile, PointerEventData> OnTilePointerUpEvent;
 
     private void Awake()
     {
@@ -46,6 +47,7 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
         {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
+        currentState = emptyState;
     }
 
     public static Tile CreateTile(GameObject tilePrefab, Transform parent, int row, int col, string letter)
@@ -100,6 +102,11 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
         SetState(spangramState);
     }
 
+    public void SetHightlightedState()
+    {
+        SetState(highlightedState);
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (canvasGroup.interactable)
@@ -120,7 +127,7 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
     {
         if (canvasGroup.interactable)
         {
-            OnTilePointerUpEvent?.Invoke(this);
+            OnTilePointerUpEvent?.Invoke(this, eventData);
         }
     }
 
