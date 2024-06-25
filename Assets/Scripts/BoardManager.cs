@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Codice.CM.Client.Differences;
 
 public class Board : MonoBehaviour
 {
@@ -89,6 +90,7 @@ public class Board : MonoBehaviour
     {
         isDragging = true;
         selectedTiles.Clear();
+        selectedTilesSet.Clear();
         AddTileToSelection(tile);
     }
 
@@ -109,15 +111,20 @@ public class Board : MonoBehaviour
         }
     }
 
-    public void EndSelection()
+    public string ConstructWordFromSelectedTiles()
     {
-        isDragging = false;
         string word = "";
         foreach (var (tile, prevousState) in selectedTiles)
         {
             word += tile.GetLetter();
         }
+        return word;
+    }
 
+    public void EndSelection()
+    {
+        isDragging = false;
+        string word = ConstructWordFromSelectedTiles();
         Puzzle.GuessResult wordEvaluation = puzzle.Guess(word);
 
         ResetSelection();
@@ -153,11 +160,7 @@ public class Board : MonoBehaviour
 
     public void UpdateGameStatusText()
     {
-        string word = "";
-        foreach (var(tile, prevousState) in selectedTiles)
-        {
-            word += tile.GetLetter();
-        }
+        string word = ConstructWordFromSelectedTiles();
         gameStatusText.text = word;
     }
 
@@ -173,7 +176,7 @@ public class Board : MonoBehaviour
 
     public void MarkSpangramWord()
     {
-        foreach (var(tile, previousState) in selectedTiles)
+        foreach (var (tile, previousState) in selectedTiles)
         {
             tile.SetSpangramState();
         }
@@ -199,17 +202,21 @@ public class Board : MonoBehaviour
 
     public void AddTileToSelection(Tile tile)
     {
+
         if (selectedTilesSet.Contains(tile))
         {
-
-
             for (int i = selectedTiles.Count - 1; i > 0; i--)
             {
                 var (selectedTile, prevousState) = selectedTiles[i];
-                if (tile == selectedTile) { break; }
-                
+
+                if (tile == selectedTile)
+                {
+                    break;
+                }
                 selectedTile.SetState(prevousState);
                 selectedTiles.RemoveAt(i);
+                selectedTilesSet.Remove(selectedTile);
+
             }
             UpdateGameStatusText();
 
@@ -225,6 +232,7 @@ public class Board : MonoBehaviour
             }
         }
         selectedTiles.Add(new Tuple<Tile, Tile.State>(tile, tile.currentState));
+        selectedTilesSet.Add(tile);
         UpdateGameStatusText();
         tile.SetSelectedState();
     }
