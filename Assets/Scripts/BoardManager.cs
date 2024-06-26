@@ -19,13 +19,29 @@ public class Board : MonoBehaviour
     public int numRows;
     public int numCols;
     private Row[] rows;
-    public List<Tuple<Tile, Tile.State>> selectedTiles = new List<Tuple<Tile, Tile.State>>();
-    private HashSet<Tile> selectedTilesSet = new HashSet<Tile>();
+    public List<Tuple<Tile, Tile.State>> selectedTiles = new();
+    private HashSet<Tile> selectedTilesSet = new();
 
     private bool isDragging = false;
     private bool isRevealingWord = false;
     private int rowIndex;
     private int columnIndex;
+
+
+    private static Board Instance { get; set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
 
     private void OnEnable()
     {
@@ -64,9 +80,10 @@ public class Board : MonoBehaviour
         {
             var rowGo = Instantiate(rowPrefab, transform);
             rowGo.transform.localPosition = new Vector3(0, -row, 0);
+            rowGo.AddComponent<Row>();
             Row rowComponent = rowGo.GetComponent<Row>();
             rowComponent.tiles = new Tile[numCols];
-            rows[row] = rowComponent; 
+            rows[row] = rowComponent;
             for (var col = 0; col < numCols; col++)
             {
                 rowComponent.tiles[col] = Tile.CreateTile(tilePrefab, rowGo.transform, row, col,

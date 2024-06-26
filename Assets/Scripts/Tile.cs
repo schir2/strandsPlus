@@ -58,7 +58,8 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
         }
 
         var tileGameObject = Instantiate(tilePrefab, parent);
-        tileGameObject.transform.localPosition = new Vector3(col, -row, 0); // Adjust for your layout
+        tileGameObject.transform.localPosition = new Vector3(col, -row, 0);
+        tileGameObject.AddComponent<Tile>();
         var tile = tileGameObject.GetComponent<Tile>();
         tile.SetLetter(letter);
         tile.RowIndex = row;
