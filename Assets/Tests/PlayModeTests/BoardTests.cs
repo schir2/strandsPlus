@@ -14,12 +14,11 @@ public class BoardTests
 
 
 
-    private TextMeshProUGUI CreateTextMeshPro(string name)
+    private static TextMeshProUGUI CreateTextMeshPro(string name)
     {
-        GameObject textGameObject = new GameObject(name);
+        var textGameObject = new GameObject(name);
         return textGameObject.AddComponent<TextMeshProUGUI>();
     }
-
 
     [SetUp]
     public void SetUp()
@@ -37,8 +36,6 @@ public class BoardTests
         board.hintButtonText = CreateTextMeshPro("HintButtonText");
         board.hintButton = new GameObject().AddComponent<Button>();
         board.timer = new GameObject().AddComponent<TimerText>();
-        board.numRows = 8;
-        board.numCols = 6;
 
         // Initialize Puzzle
         puzzle = new Puzzle
@@ -73,7 +70,7 @@ public class BoardTests
     public IEnumerator TestSetupBoard()
     {
         // Act
-        board.SetupBoard(puzzle);
+        board.InitializeBoard(puzzle);
 
         // Assert
         Assert.AreEqual("Greek Mythology", board.themeValueText.text);
@@ -86,11 +83,9 @@ public class BoardTests
     [UnityTest]
     public IEnumerator TestTileSelection()
     {
-        // Arrange
-        board.SetupBoard(puzzle);
 
         // Simulate tile selection
-        Tile tile = Tile.CreateTile(board.tilePrefab, board.transform, 2, 2, "m");
+        var tile = Tile.CreateTile(board.tilePrefab, board.transform, 2, 2, "m");
 
         // Act
         board.OnTilePointerDown(tile, null);
@@ -106,13 +101,11 @@ public class BoardTests
     [UnityTest]
     public IEnumerator TestEndSelection()
     {
-        // Arrange
-        board.SetupBoard(puzzle);
 
-        Tile tile1 = Tile.CreateTile(board.tilePrefab, board.transform, 2, 0, "b");
-        Tile tile2 = Tile.CreateTile(board.tilePrefab, board.transform, 2, 1, "e");
-        Tile tile3 = Tile.CreateTile(board.tilePrefab, board.transform, 2, 2, "t");
-        Tile tile4 = Tile.CreateTile(board.tilePrefab, board.transform, 2, 3, "a");
+        var tile1 = Tile.CreateTile(board.tilePrefab, board.transform, 2, 0, "b");
+        var tile2 = Tile.CreateTile(board.tilePrefab, board.transform, 2, 1, "e");
+        var tile3 = Tile.CreateTile(board.tilePrefab, board.transform, 2, 2, "t");
+        var tile4 = Tile.CreateTile(board.tilePrefab, board.transform, 2, 3, "a");
 
         // Act
         board.OnTilePointerDown(tile1, null);
@@ -129,12 +122,5 @@ public class BoardTests
         Assert.AreEqual("beta", board.gameStatusText.text);
 
         yield return null;
-    }
-
-    private TextMeshProUGUI CreateText(string name)
-    {
-        var go = new GameObject(name);
-        var text = go.AddComponent<TextMeshProUGUI>();
-        return text;
     }
 }

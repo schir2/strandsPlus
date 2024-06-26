@@ -1,4 +1,3 @@
-
 using System;
 using TMPro;
 using UnityEngine;
@@ -7,7 +6,7 @@ using UnityEngine.UI;
 
 public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerUpHandler
 {
-    [System.Serializable]
+    [Serializable]
     public class State
     {
         public Color fillColor;
@@ -15,23 +14,22 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
         public bool isInteractive;
     }
 
-    [Header("Tiles")]
-    public State emptyState;
+    [Header("Tiles")] public State emptyState;
     public State selectedState;
     public State correctState;
     public State spangramState;
     public State highlightedState;
 
-    public State currentState { get; private set; }
-    public string letter { get; private set; }
+    public State CurrentState { get; private set; }
+    public string Letter { get; private set; }
 
     private Image fill;
     private Outline outline;
     public TextMeshProUGUI text;
     private CanvasGroup canvasGroup;
 
-    internal int rowIndex;
-    internal int colIndex;
+    internal int RowIndex;
+    internal int ColIndex;
 
     public static event Action<Tile, PointerEventData> OnTilePointerDownEvent;
     public static event Action<Tile, PointerEventData> OnTilePointerEnterEvent;
@@ -47,7 +45,8 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
         {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
-        currentState = emptyState;
+
+        CurrentState = emptyState;
     }
 
     public static Tile CreateTile(GameObject tilePrefab, Transform parent, int row, int col, string letter)
@@ -58,25 +57,25 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
             return null;
         }
 
-        GameObject tileGameObject = Instantiate(tilePrefab, parent);
+        var tileGameObject = Instantiate(tilePrefab, parent);
         tileGameObject.transform.localPosition = new Vector3(col, -row, 0); // Adjust for your layout
-        Tile tile = tileGameObject.GetComponent<Tile>();
+        var tile = tileGameObject.GetComponent<Tile>();
         tile.SetLetter(letter);
-        tile.rowIndex = row;
-        tile.colIndex = col;
+        tile.RowIndex = row;
+        tile.ColIndex = col;
         return tile;
     }
 
 
     public void SetLetter(string newLetter)
     {
-        letter = newLetter;
+        Letter = newLetter;
         text.text = newLetter;
     }
 
     public void SetState(State state)
     {
-        this.currentState = state;
+        CurrentState = state;
         fill.color = state.fillColor;
         outline.effectColor = state.outlineColor;
         canvasGroup.interactable = state.isInteractive;
@@ -102,7 +101,7 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
         SetState(spangramState);
     }
 
-    public void SetHightlightedState()
+    public void SetHighlightedState()
     {
         SetState(highlightedState);
     }
@@ -133,6 +132,6 @@ public class Tile : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
 
     internal string GetLetter()
     {
-        return this.letter.ToString();
+        return Letter;
     }
 }

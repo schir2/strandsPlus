@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using Codice.CM.Client.Differences;
+using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
@@ -16,7 +15,7 @@ public class Board : MonoBehaviour
     public TextMeshProUGUI hintButtonText;
     public Button hintButton;
     public TimerText timer;
-    public Puzzle puzzle;
+    private Puzzle puzzle;
     public int numRows;
     public int numCols;
     private Row[] rows;
@@ -42,43 +41,38 @@ public class Board : MonoBehaviour
         Tile.OnTilePointerUpEvent -= OnTilePointerUp;
     }
 
-    private void Awake()
-    {
-        rows = new Row[numRows];
-    }
-
     private void Start()
     {
         hintButton.onClick.AddListener(OnHintButtonClicked);
     }
 
-    public void SetupBoard(Puzzle newPuzzle)
+    public void InitializeBoard(Puzzle newPuzzle)
     {
         puzzle = newPuzzle;
-        themeValueText.text = puzzle.data.theme;
-
-        for (int row = 0; row < numRows; row++)
-        {
-            GameObject rowGO = Instantiate(rowPrefab, transform);
-            rowGO.transform.localPosition = new Vector3(0, -row, 0);
-            Row rowComponent = rowGO.GetComponent<Row>();
-            rowComponent.tiles = new Tile[numCols];
-            rows[row] = rowComponent;
-            for (int col = 0; col < numCols; col++)
-            {
-                rowComponent.tiles[col] = Tile.CreateTile(tilePrefab, rowGO.transform, row, col, newPuzzle.data.puzzleGrid[row][col]);
-            }
-        }
-
+        CreateBoardLayout();
         timer.StartTimer();
-
+        // themeValueText.text = puzzle.data.theme;
     }
 
+    private void CreateBoardLayout()
 
-    private void Update()
     {
-
-        UpdateHintText();
+        numRows = puzzle.data.puzzleGrid.Count;
+        numCols = puzzle.data.puzzleGrid[0].Count;
+        rows = new Row[numRows];
+        for (var row = 0; row < puzzle.data.puzzleGrid.Count; row++)
+        {
+            var rowGo = Instantiate(rowPrefab, transform);
+            rowGo.transform.localPosition = new Vector3(0, -row, 0);
+            Row rowComponent = rowGo.GetComponent<Row>();
+            rowComponent.tiles = new Tile[numCols];
+            rows[row] = rowComponent; 
+            for (var col = 0; col < numCols; col++)
+            {
+                rowComponent.tiles[col] = Tile.CreateTile(tilePrefab, rowGo.transform, row, col,
+                    puzzle.data.puzzleGrid[row][col]);
+            }
+        }
     }
 
     public bool HasWon()
@@ -111,17 +105,18 @@ public class Board : MonoBehaviour
         }
     }
 
-    public string ConstructWordFromSelectedTiles()
+    private string ConstructWordFromSelectedTiles()
     {
         string word = "";
         foreach (var (tile, prevousState) in selectedTiles)
         {
             word += tile.GetLetter();
         }
+
         return word;
     }
 
-    public void EndSelection()
+    private void EndSelection()
     {
         isDragging = false;
         string word = ConstructWordFromSelectedTiles();
@@ -143,14 +138,12 @@ public class Board : MonoBehaviour
 
         else if (Puzzle.GuessResult.Correct == wordEvaluation)
         {
-
             puzzle.state.hints += 1;
             puzzle.state.wordsGuessed.Add(word);
             MarkCorrectWord();
         }
         else if (Puzzle.GuessResult.Valid == wordEvaluation)
         {
-
             puzzle.state.hints += 1;
             puzzle.state.wordsGuessed.Add(word);
         }
@@ -158,23 +151,24 @@ public class Board : MonoBehaviour
         UpdateGameProgressText();
     }
 
-    public void UpdateGameStatusText()
+    private void UpdateGameStatusText()
     {
         string word = ConstructWordFromSelectedTiles();
         gameStatusText.text = word;
     }
 
-    public void UpdateHintText()
+    private void UpdateHintText()
     {
         hintButtonText.text = $"Hints {puzzle.state.hints}";
     }
 
-    public void UpdateGameProgressText()
+    private void UpdateGameProgressText()
     {
-        gameProgressText.text = $"{puzzle.state.PuzzleWordsFound().ToString()} of {puzzle.data.PuzzleWordsCount().ToString()} words found";
+        gameProgressText.text =
+            $"{puzzle.state.PuzzleWordsFound().ToString()} of {puzzle.data.PuzzleWordsCount().ToString()} words found";
     }
 
-    public void MarkSpangramWord()
+    private void MarkSpangramWord()
     {
         foreach (var (tile, previousState) in selectedTiles)
         {
@@ -182,7 +176,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    public void ResetSelection()
+    private void ResetSelection()
     {
         foreach (var (tile, previousState) in selectedTiles)
         {
@@ -190,7 +184,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    public void MarkCorrectWord()
+    private void MarkCorrectWord()
     {
         foreach (var (tile, previousState) in selectedTiles)
         {
@@ -199,10 +193,8 @@ public class Board : MonoBehaviour
     }
 
 
-
-    public void AddTileToSelection(Tile tile)
+    private void AddTileToSelection(Tile tile)
     {
-
         if (selectedTilesSet.Contains(tile))
         {
             for (int i = selectedTiles.Count - 1; i > 0; i--)
@@ -213,36 +205,38 @@ public class Board : MonoBehaviour
                 {
                     break;
                 }
+
                 selectedTile.SetState(prevousState);
                 selectedTiles.RemoveAt(i);
                 selectedTilesSet.Remove(selectedTile);
-
             }
+
             UpdateGameStatusText();
 
             return;
-
         }
+
         if (selectedTiles.Count > 0)
         {
-            var (lastTile, previousState) = selectedTiles[selectedTiles.Count - 1];
+            var (lastTile, previousState) = selectedTiles[^1];
             if (!IsAdjacent(lastTile, tile))
             {
                 return;
             }
         }
-        selectedTiles.Add(new Tuple<Tile, Tile.State>(tile, tile.currentState));
+
+        selectedTiles.Add(new Tuple<Tile, Tile.State>(tile, tile.CurrentState));
         selectedTilesSet.Add(tile);
         UpdateGameStatusText();
         tile.SetSelectedState();
     }
 
-    public bool IsAdjacent(Tile lastTile, Tile newTile)
+    private static bool IsAdjacent(Tile lastTile, Tile newTile)
     {
-        int lastRow = lastTile.rowIndex;
-        int lastCol = lastTile.colIndex;
-        int newRow = newTile.rowIndex;
-        int newCol = newTile.colIndex;
+        var lastRow = lastTile.RowIndex;
+        var lastCol = lastTile.ColIndex;
+        var newRow = newTile.RowIndex;
+        var newCol = newTile.ColIndex;
 
         return Mathf.Abs(lastRow - newRow) <= 1 && Mathf.Abs(lastCol - newCol) <= 1;
     }
@@ -252,26 +246,21 @@ public class Board : MonoBehaviour
         UseHint();
     }
 
-    public void UseHint()
+    private void UseHint()
     {
-        if (!isRevealingWord && puzzle.state.hints > 0)
+        if (isRevealingWord || puzzle.state.hints <= 0) return;
+        var wordPosition = puzzle.RevealWord();
+        if (wordPosition != null)
         {
-            List<List<int>> wordPosition = puzzle.RevealWord();
-            if (wordPosition != null)
-            {
-                HighlightWord(wordPosition);
-            }
-        }
-
-
-    }
-
-    public void HighlightWord(List<List<int>> wordPosition)
-    {
-        for (int i = 0; i < wordPosition.Count; i++)
-        {
-            rows[wordPosition[i][0]].tiles[wordPosition[i][1]].SetHightlightedState();
+            HighlightWord(wordPosition);
         }
     }
 
+    private void HighlightWord(List<List<int>> wordPosition)
+    {
+        foreach (var tileAndState in wordPosition)
+        {
+            rows[tileAndState[0]].tiles[tileAndState[1]].SetHighlightedState();
+        }
+    }
 }

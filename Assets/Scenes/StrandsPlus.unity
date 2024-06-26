@@ -1519,17 +1519,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 347889909}
---- !u!114 &365421173 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8500702619627388858, guid: 5ceb37b07349a8240a0d7b3f32237f38, type: 3}
-  m_PrefabInstance: {fileID: 3878451426536391252}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &402309464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2287,6 +2276,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 531981095}
   m_CullTransparentMesh: 1
+--- !u!114 &556349431 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8500702619627388858, guid: 5ceb37b07349a8240a0d7b3f32237f38, type: 3}
+  m_PrefabInstance: {fileID: 3878451426536391252}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &592960825
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,9 +2579,9 @@ MonoBehaviour:
   rowPrefab: {fileID: 8489520106661624763, guid: 680fe4d25bbe3b3449b0cd9841b5e684, type: 3}
   tilePrefab: {fileID: 163433604771445647, guid: c78e42d80ce4c6e4a8a9fee87eafb921, type: 3}
   themeValueText: {fileID: 58957259}
-  gameProgressText: {fileID: 1881207865}
+  gameProgressText: {fileID: 531981097}
   gameStatusText: {fileID: 531981097}
-  hintButtonText: {fileID: 365421173}
+  hintButtonText: {fileID: 556349431}
   hintButton: {fileID: 676398246}
   timer: {fileID: 347889911}
   numRows: 8

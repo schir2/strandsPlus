@@ -46,7 +46,7 @@ public class TileTests
         tile.SetLetter(expectedLetter);
 
         // Assert
-        Assert.AreEqual(expectedLetter, tile.letter);
+        Assert.AreEqual(expectedLetter, tile.Letter);
         Assert.AreEqual(expectedLetter, tile.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
@@ -65,7 +65,7 @@ public class TileTests
         tile.SetState(state);
 
         // Assert
-        Assert.AreEqual(state, tile.currentState);
+        Assert.AreEqual(state, tile.CurrentState);
         Assert.AreEqual(state.fillColor, tile.GetComponent<Image>().color);
         Assert.AreEqual(state.outlineColor, tile.GetComponent<Outline>().effectColor);
         Assert.AreEqual(state.isInteractive, tile.GetComponent<CanvasGroup>().interactable);
