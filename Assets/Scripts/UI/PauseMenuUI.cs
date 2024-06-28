@@ -1,17 +1,29 @@
+using Managers;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class PauseMenuUI : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        public Button resumeButton;
+
+        public Button mainMenuButton;
+
+        private void Start()
         {
+            resumeButton.onClick.AddListener(OnPauseButtonClicked);
+            mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
         }
 
-        // Update is called once per frame
-        void Update()
+        private static void OnMainMenuButtonClicked()
         {
+            GameManager.Instance.ChangeState(GameState.MainMenu);
+        }
+
+        private static void OnPauseButtonClicked()
+        {
+            GameManager.Instance.ChangeState(GameState.Playing);
         }
     }
 }
