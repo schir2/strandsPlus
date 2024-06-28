@@ -10,6 +10,7 @@ namespace UI
         public Button randomGameButton;
         public Button gameModeSettingsButton;
         public Button exitGameButton;
+        public Button resumeGameButton;
 
         private void Start()
         {
@@ -17,27 +18,36 @@ namespace UI
             randomGameButton.onClick.AddListener(OnRandomGameButtonClicked);
             gameModeSettingsButton.onClick.AddListener(OnGameModeSettingsButtonClicked);
             exitGameButton.onClick.AddListener(OnExitGameButtonClicked);
+            resumeGameButton.onClick.AddListener(OnResumeGameButtonClicked);
         }
 
-        private void OnDailyGameButtonClicked()
+        private static void OnResumeGameButtonClicked()
+        {
+            GameManager.Instance.ChangeState(GameState.Playing);
+        }
+
+        private static void OnDailyGameButtonClicked()
         {
             GameManager.Instance.OnSelectDailyPuzzle();
         }
 
-        private void OnRandomGameButtonClicked()
+        private static void OnRandomGameButtonClicked()
         {
-            // Implement logic for random game if necessary
-            GameManager.Instance.OnStartGame(); // This is just a placeholder, adjust as needed
+            GameManager.Instance.OnStartGame();
         }
 
-        private void OnGameModeSettingsButtonClicked()
+        private static void OnGameModeSettingsButtonClicked()
         {
             GameManager.Instance.OnGameModeSettings();
         }
 
-        private void OnExitGameButtonClicked()
+        private static void OnExitGameButtonClicked()
         {
             Application.Quit();
+        }
+        private void Update()
+        {
+            resumeGameButton.gameObject.SetActive(PuzzleManager.Instance.ActivePuzzle != null);
         }
     }
 }
