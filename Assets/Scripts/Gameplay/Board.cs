@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Data;
+using Managers;
 using TMPro;
-using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,7 +18,7 @@ namespace Gameplay
         public TextMeshProUGUI gameStatusText;
         public TextMeshProUGUI hintButtonText;
         public Button hintButton;
-        public Timer timer;
+        public Button pauseButton;
         private Puzzle puzzle;
         public int numRows;
         public int numCols;
@@ -64,14 +64,18 @@ namespace Gameplay
         private void Start()
         {
             hintButton.onClick.AddListener(OnHintButtonClicked);
+            pauseButton.onClick.AddListener(OnPauseButtonClicked);
+        }
+
+        private static void OnPauseButtonClicked()
+        {
+            GameManager.Instance.ChangeState(GameState.Paused);
         }
 
         public void InitializeBoard(Puzzle newPuzzle)
         {
             puzzle = newPuzzle;
             CreateBoardLayout();
-            timer.StartTimer();
-            // themeValueText.text = puzzle.data.theme;
         }
 
         private void CreateBoardLayout()
