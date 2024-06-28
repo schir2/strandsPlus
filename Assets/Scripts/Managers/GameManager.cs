@@ -1,6 +1,7 @@
 using System;
 using Data;
 using Gameplay;
+using UI;
 using UnityEngine;
 
 namespace Managers
@@ -49,19 +50,19 @@ namespace Managers
             switch (newState)
             {
                 case GameState.MainMenu:
-                    // Handle MainMenu state
+                    Timer.Instance.PauseTimer();
                     break;
                 case GameState.Playing:
-                    // Handle Playing state
+                    Timer.Instance.ResumeTimer();
                     break;
                 case GameState.Paused:
-                    // Handle Paused state
+                    Timer.Instance.PauseTimer();
                     break;
                 case GameState.Lost:
-                    // Handle GameOver state
+                    Timer.Instance.PauseTimer();
                     break;
                 case GameState.Won:
-                    // Handle Victory state
+                    Timer.Instance.PauseTimer();
                     break;
             }
         }
@@ -70,7 +71,7 @@ namespace Managers
         {
             GameModeManager.Instance.ApplyDefaultGameMode();
             PuzzleManager.Instance.GetTodaysPuzzle();
-            board.InitializeBoard(PuzzleManager.Instance.currentPuzzle);
+            board.InitializeBoard(PuzzleManager.Instance.ActivePuzzle);
             ChangeState(GameState.Playing);
         }
 
