@@ -22,16 +22,16 @@ namespace Gameplay
         public State spangramState;
         public State highlightedState;
 
-        public State currentState { get; private set; }
-        public string letter { get; private set; }
+        public State CurrentState { get; private set; }
+        public string Letter { get; private set; }
 
         private Image fill;
         private Outline outline;
         public TextMeshProUGUI text;
         private CanvasGroup canvasGroup;
 
-        internal int rowIndex;
-        internal int colIndex;
+        internal int RowIndex;
+        internal int ColIndex;
 
         public static event Action<Tile, PointerEventData> OnTilePointerDownEvent;
         public static event Action<Tile, PointerEventData> OnTilePointerEnterEvent;
@@ -48,7 +48,7 @@ namespace Gameplay
                 canvasGroup = gameObject.AddComponent<CanvasGroup>();
             }
 
-            currentState = emptyState;
+            CurrentState = emptyState;
         }
 
         public static Tile CreateTile(GameObject tilePrefab, Transform parent, int row, int col, string letter)
@@ -59,25 +59,25 @@ namespace Gameplay
                 return null;
             }
 
-            GameObject tileGameObject = Instantiate(tilePrefab, parent);
-            tileGameObject.transform.localPosition = new Vector3(col, -row, 0); // Adjust for your layout
-            Tile tile = tileGameObject.GetComponent<Tile>();
+            var tileGameObject = Instantiate(tilePrefab, parent);
+            tileGameObject.transform.localPosition = new Vector3(col, -row, 0);
+            var tile = tileGameObject.GetComponent<Tile>();
             tile.SetLetter(letter);
-            tile.rowIndex = row;
-            tile.colIndex = col;
+            tile.RowIndex = row;
+            tile.ColIndex = col;
             return tile;
         }
 
 
         public void SetLetter(string newLetter)
         {
-            letter = newLetter;
+            Letter = newLetter;
             text.text = newLetter;
         }
 
         public void SetState(State state)
         {
-            this.currentState = state;
+            CurrentState = state;
             fill.color = state.fillColor;
             outline.effectColor = state.outlineColor;
             canvasGroup.interactable = state.isInteractive;
@@ -103,7 +103,7 @@ namespace Gameplay
             SetState(spangramState);
         }
 
-        public void SetHightlightedState()
+        public void SetHighlightedState()
         {
             SetState(highlightedState);
         }
@@ -134,7 +134,7 @@ namespace Gameplay
 
         internal string GetLetter()
         {
-            return this.letter.ToString();
+            return Letter;
         }
     }
 }

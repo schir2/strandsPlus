@@ -70,7 +70,7 @@ namespace Managers
         {
             GameModeManager.Instance.ApplyDefaultGameMode();
             PuzzleManager.Instance.GetTodaysPuzzle();
-            board.SetupBoard(PuzzleManager.Instance.currentPuzzle);
+            board.InitializeBoard(PuzzleManager.Instance.currentPuzzle);
             ChangeState(GameState.Playing);
         }
 
@@ -93,7 +93,7 @@ namespace Managers
             }
 
             // Update the board with the current puzzle
-            board.SetupBoard(puzzle);
+            board.InitializeBoard(puzzle);
             Debug.Log($"Starting puzzle: {puzzle.data.theme}");
         }
     }
