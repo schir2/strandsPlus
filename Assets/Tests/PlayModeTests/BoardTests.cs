@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using System.Collections.Generic;
+using Data;
+using Gameplay;
+using UI;
 
 public class BoardTests
 {
@@ -36,7 +39,7 @@ public class BoardTests
         board.gameStatusText = CreateTextMeshPro("GameStatusText");
         board.hintButtonText = CreateTextMeshPro("HintButtonText");
         board.hintButton = new GameObject().AddComponent<Button>();
-        board.timer = new GameObject().AddComponent<TimerText>();
+        board.timer = new GameObject().AddComponent<Timer>();
         board.numRows = 8;
         board.numCols = 6;
 
