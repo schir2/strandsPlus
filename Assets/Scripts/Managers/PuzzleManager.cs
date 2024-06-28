@@ -13,7 +13,7 @@ namespace Managers
         private Dictionary<string, PuzzleData> dailyPuzzles;
         public HashSet<string> validWords { get; private set; } = new HashSet<string>();
         public string dailyPuzzleFileName = "dailyPuzzles.json";
-        public Puzzle currentPuzzle { get; private set; }
+        public Puzzle ActivePuzzle { get; private set; }
 
 
         private void Awake()
@@ -79,18 +79,18 @@ namespace Managers
                 data = dailyPuzzles["2024-06-16"];
             }
 
-            currentPuzzle = new Puzzle(data, validWords);
-            return currentPuzzle;
+            ActivePuzzle = new Puzzle(data, validWords);
+            return ActivePuzzle;
         }
 
         public Puzzle GetCurrentPuzzle()
         {
-            if (currentPuzzle == null)
+            if (ActivePuzzle == null)
             {
                 Debug.LogError("No current puzzle is set!");
             }
 
-            return currentPuzzle;
+            return ActivePuzzle;
         }
     }
 }
