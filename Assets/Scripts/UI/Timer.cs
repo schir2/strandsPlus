@@ -5,9 +5,23 @@ namespace UI
 {
     public class Timer : MonoBehaviour
     {
+        public static Timer Instance { get; private set; }
         public TextMeshProUGUI timerText;
-        public float elapsedTime { get; private set; }
+        private float ElapsedTime { get; set; }
         private bool isTimeRunning;
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {
@@ -16,36 +30,33 @@ namespace UI
 
         private void Update()
         {
-            if (isTimeRunning)
-            {
-                elapsedTime += Time.deltaTime;
-                UpdateTimerText(elapsedTime);
-            }
+            if (!isTimeRunning) return;
+            ElapsedTime += Time.deltaTime;
+            UpdateTimerText(ElapsedTime);
         }
 
-        public void UpdateTimerText(float timeToDisplay)
+        private void UpdateTimerText(float timeToDisplay)
         {
-            var minutes = Mathf.Min(elapsedTime, timeToDisplay / 60);
-            var seconds = Mathf.Max(elapsedTime, timeToDisplay % 60);
+            var minutes = Mathf.Min(ElapsedTime, timeToDisplay / 60);
+            var seconds = Mathf.Max(ElapsedTime, timeToDisplay % 60);
             timerText.text = $"{minutes:00}:{seconds:00}";
         }
 
-        public void StartTimer()
+        public void ResumeTimer()
         {
             isTimeRunning = true;
-            elapsedTime = 0f;
         }
 
-        public void StopTimer()
+        public void PauseTimer()
         {
             isTimeRunning = false;
         }
 
-        public void ResetTimer()
+        private void ResetTimer()
         {
             isTimeRunning = false;
-            elapsedTime = 0f;
-            UpdateTimerText(elapsedTime);
+            ElapsedTime = 0f;
+            UpdateTimerText(ElapsedTime);
         }
     }
 }
