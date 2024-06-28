@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using Gameplay;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -16,7 +13,6 @@ public class TileTests
     [SetUp]
     public void Setup()
     {
-        // Create a new Tile GameObject with the necessary components
         tilePrefab = new GameObject("TilePrefab");
         tilePrefab.AddComponent<Image>();
         tilePrefab.AddComponent<Outline>();
@@ -55,7 +51,7 @@ public class TileTests
     public void TestSetState()
     {
         // Arrange
-        Tile.State state = new Tile.State
+        var state = new Tile.State
         {
             fillColor = Color.red,
             outlineColor = Color.blue,
@@ -76,7 +72,7 @@ public class TileTests
     public void TestOnPointerDown()
     {
         // Arrange
-        bool eventTriggered = false;
+        var eventTriggered = false;
         Tile.OnTilePointerDownEvent += (t, e) => eventTriggered = true;
 
         // Act
@@ -112,7 +108,7 @@ public class TileTests
     public void TestOnPointerUp()
     {
         // Arrange
-        bool eventTriggered = false;
+        var eventTriggered = false;
         Tile.OnTilePointerUpEvent += (t, e) => eventTriggered = true;
 
         // Act
