@@ -94,7 +94,7 @@ namespace Managers
 
             // Update the board with the current puzzle
             board.InitializeBoard(puzzle);
-            Debug.Log($"Starting puzzle: {puzzle.data.theme}");
+            Debug.Log($"Starting puzzle: {puzzle.Data.theme}");
         }
     }
 }

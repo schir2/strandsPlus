@@ -14,73 +14,73 @@ namespace Data
             Invalid
         }
 
-        public PuzzleData data;
-        public HashSet<string> validWords;
-        public PuzzleState state = new PuzzleState();
+        public readonly PuzzleData Data;
+        public readonly HashSet<string> ValidWords;
+        public PuzzleState State = new();
 
-        public void Init(PuzzleData data, HashSet<string> validWords)
+        public Puzzle(PuzzleData data, HashSet<string> validWords)
         {
-            this.data = data;
-            this.validWords = validWords;
+            Data = data;
+            ValidWords = validWords;
         }
 
         public bool IsSpangramWord(string word)
         {
-            return word == data.spangram;
+            return word == Data.spangram;
         }
 
         public bool IsCorrectdWord(string word)
         {
-            return data.correctWords.Contains(word);
+            return Data.correctWords.Contains(word);
         }
 
         public bool IsValidWord(string word)
         {
-            return validWords.Contains(word);
+            return ValidWords.Contains(word);
         }
 
         public GuessResult Guess(string word)
         {
-            state.lastWordGuessed = word;
+            State.lastWordGuessed = word;
 
             if (IsSpangramWord(word))
             {
-                state.spangramFound = true;
-                state.lastGuessResult = GuessResult.Spangram;
-                state.IncrementCorrectGuessCount();
+                State.spangramFound = true;
+                State.lastGuessResult = GuessResult.Spangram;
+                State.IncrementCorrectGuessCount();
             }
             else if (IsCorrectdWord(word))
             {
-                state.correctWordsGuessed.Add(word);
-                state.lastGuessResult = GuessResult.Correct;
-                state.IncrementCorrectGuessCount();
+                State.correctWordsGuessed.Add(word);
+                State.lastGuessResult = GuessResult.Correct;
+                State.IncrementCorrectGuessCount();
             }
             else if (IsValidWord(word))
             {
-                state.lastGuessResult = GuessResult.Valid;
-                if (!state.wordsGuessed.Contains(word))
+                State.lastGuessResult = GuessResult.Valid;
+                if (!State.wordsGuessed.Contains(word))
                 {
-                    state.IncrementCorrectGuessCount();
+                    State.IncrementCorrectGuessCount();
                 }
             }
             else
             {
-                state.lastGuessResult = GuessResult.Invalid;
+                State.lastGuessResult = GuessResult.Invalid;
             }
 
-            return state.lastGuessResult;
+            return State.lastGuessResult;
         }
 
         public List<List<int>> RevealWord()
         {
-            if (state.hints > 0)
+            if (State.hints > 0)
             {
-                foreach (string word in data.correctWords)
+                foreach (string word in Data.correctWords)
                 {
-                    if (!state.correctWordsGuessed.Contains(word))
+                    if (!State.correctWordsGuessed.Contains(word))
                     {
-                        state.hints--;
-                        return data.wordPositions[word];
+                        State.hints--;
+                        return Data.wordPositions[word];
                     }
                 }
             }

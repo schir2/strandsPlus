@@ -25,9 +25,9 @@ namespace UI
 
         public void UpdateTimerText(float timeToDisplay)
         {
-            float minutes = Mathf.Min(elapsedTime, timeToDisplay / 60);
-            float seconds = Mathf.Max(elapsedTime, timeToDisplay % 60);
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            var minutes = Mathf.Min(elapsedTime, timeToDisplay / 60);
+            var seconds = Mathf.Max(elapsedTime, timeToDisplay % 60);
+            timerText.text = $"{minutes:00}:{seconds:00}";
         }
 
         public void StartTimer()

@@ -42,26 +42,24 @@ public class BoardTests
 
     private Puzzle SetUpPuzzle()
     {
-        puzzle = new Puzzle
+        var puzzleData = new PuzzleData
         {
-            data = new PuzzleData
+            theme = "Greek Mythology",
+            spangram = "greekletters",
+            correctWords = new List<string> { "beta", "sigma", "gamma", "delta", "alpha", "kappa", "epsilon" },
+            puzzleGrid = new List<List<string>>
             {
-                theme = "Greek Mythology",
-                spangram = "greekletters",
-                correctWords = new List<string> { "beta", "sigma", "gamma", "delta", "alpha", "kappa", "epsilon" },
-                puzzleGrid = new List<List<string>>
-                {
-                    new List<string> { "t", "g", "r", "a", "l", "p" },
-                    new List<string> { "a", "e", "e", "e", "k", "h" },
-                    new List<string> { "b", "a", "m", "m", "l", "a" },
-                    new List<string> { "d", "g", "a", "e", "k", "a" },
-                    new List<string> { "e", "l", "a", "t", "p", "p" },
-                    new List<string> { "s", "t", "e", "t", "a", "l" },
-                    new List<string> { "i", "g", "r", "n", "o", "i" },
-                    new List<string> { "a", "m", "s", "e", "p", "s" }
-                }
+                new() { "t", "g", "r", "a", "l", "p" },
+                new() { "a", "e", "e", "e", "k", "h" },
+                new() { "b", "a", "m", "m", "l", "a" },
+                new() { "d", "g", "a", "e", "k", "a" },
+                new() { "e", "l", "a", "t", "p", "p" },
+                new() { "s", "t", "e", "t", "a", "l" },
+                new() { "i", "g", "r", "n", "o", "i" },
+                new() { "a", "m", "s", "e", "p", "s" }
             }
         };
+        puzzle = new Puzzle(puzzleData, new HashSet<string> { "valid" });
         return puzzle;
     }
 

@@ -77,10 +77,10 @@ namespace Gameplay
         private void CreateBoardLayout()
 
         {
-            numRows = puzzle.data.puzzleGrid.Count;
-            numCols = puzzle.data.puzzleGrid[0].Count;
+            numRows = puzzle.Data.puzzleGrid.Count;
+            numCols = puzzle.Data.puzzleGrid[0].Count;
             rows = new Row[numRows];
-            for (var row = 0; row < puzzle.data.puzzleGrid.Count; row++)
+            for (var row = 0; row < puzzle.Data.puzzleGrid.Count; row++)
             {
                 var rowGo = Instantiate(rowPrefab, transform);
                 rowGo.transform.localPosition = new Vector3(0, -row, 0);
@@ -91,7 +91,7 @@ namespace Gameplay
                 for (var col = 0; col < numCols; col++)
                 {
                     rowComponent.tiles[col] = Tile.CreateTile(tilePrefab, rowGo.transform, row, col,
-                        puzzle.data.puzzleGrid[row][col]);
+                        puzzle.Data.puzzleGrid[row][col]);
                 }
             }
         }
@@ -145,28 +145,28 @@ namespace Gameplay
 
             ResetSelection();
 
-            if (puzzle.state.wordsGuessed.Contains(word))
+            if (puzzle.State.wordsGuessed.Contains(word))
             {
                 return;
             }
 
             if (Puzzle.GuessResult.Spangram == wordEvaluation)
             {
-                puzzle.state.hints += 1;
-                puzzle.state.wordsGuessed.Add(word);
+                puzzle.State.hints += 1;
+                puzzle.State.wordsGuessed.Add(word);
                 MarkSpangramWord();
             }
 
             else if (Puzzle.GuessResult.Correct == wordEvaluation)
             {
-                puzzle.state.hints += 1;
-                puzzle.state.wordsGuessed.Add(word);
+                puzzle.State.hints += 1;
+                puzzle.State.wordsGuessed.Add(word);
                 MarkCorrectWord();
             }
             else if (Puzzle.GuessResult.Valid == wordEvaluation)
             {
-                puzzle.state.hints += 1;
-                puzzle.state.wordsGuessed.Add(word);
+                puzzle.State.hints += 1;
+                puzzle.State.wordsGuessed.Add(word);
             }
 
             UpdateGameProgressText();
@@ -180,13 +180,13 @@ namespace Gameplay
 
         private void UpdateHintText()
         {
-            hintButtonText.text = $"Hints {puzzle.state.hints}";
+            hintButtonText.text = $"Hints {puzzle.State.hints}";
         }
 
         private void UpdateGameProgressText()
         {
             gameProgressText.text =
-                $"{puzzle.state.PuzzleWordsFound().ToString()} of {puzzle.data.PuzzleWordsCount().ToString()} words found";
+                $"{puzzle.State.PuzzleWordsFound().ToString()} of {puzzle.Data.PuzzleWordsCount().ToString()} words found";
         }
 
         private void MarkSpangramWord()
@@ -269,7 +269,7 @@ namespace Gameplay
 
         private void UseHint()
         {
-            if (isRevealingWord || puzzle.state.hints <= 0) return;
+            if (isRevealingWord || puzzle.State.hints <= 0) return;
             var wordPosition = puzzle.RevealWord();
             if (wordPosition != null)
             {

@@ -1,13 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using Data;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 public class PuzzleTests
 {
-
     private Puzzle puzzle;
     private PuzzleData puzzleData;
 
@@ -22,58 +18,105 @@ public class PuzzleTests
             correctWords = new List<string> { "beta", "sigma", "gamma", "delta", "alpha", "kappa", "epsilon" },
             puzzleGrid = new List<List<string>>
             {
-                new List<string> { "t", "g", "r", "a", "l", "p" },
-                new List<string> { "a", "e", "e", "e", "k", "h" },
-                new List<string> { "b", "a", "m", "m", "l", "a" },
-                new List<string> { "d", "g", "a", "e", "k", "a" },
-                new List<string> { "e", "l", "a", "t", "p", "p" },
-                new List<string> { "s", "t", "e", "t", "a", "l" },
-                new List<string> { "i", "g", "r", "n", "o", "i" },
-                new List<string> { "a", "m", "s", "e", "p", "s" }
+                new() { "t", "g", "r", "a", "l", "p" },
+                new() { "a", "e", "e", "e", "k", "h" },
+                new() { "b", "a", "m", "m", "l", "a" },
+                new() { "d", "g", "a", "e", "k", "a" },
+                new() { "e", "l", "a", "t", "p", "p" },
+                new() { "s", "t", "e", "t", "a", "l" },
+                new() { "i", "g", "r", "n", "o", "i" },
+                new() { "a", "m", "s", "e", "p", "s" }
             },
             wordPositions = new Dictionary<string, List<List<int>>>
             {
-                { "beta", new List<List<int>> { new List<int> { 2, 0 }, new List<int> { 2, 1 }, new List<int> { 2, 2 }, new List<int> { 2, 3 } } },
-                { "sigma", new List<List<int>> { new List<int> { 1, 0 }, new List<int> { 2, 0 }, new List<int> { 3, 0 }, new List<int> { 4, 0 }, new List<int> { 5, 0 } } },
-                { "gamma", new List<List<int>> { new List<int> { 2, 2 }, new List<int> { 2, 3 }, new List<int> { 2, 4 }, new List<int> { 2, 5 }, new List<int> { 2, 6 } } },
-                { "delta", new List<List<int>> { new List<int> { 3, 0 }, new List<int> { 3, 1 }, new List<int> { 3, 2 }, new List<int> { 3, 3 }, new List<int> { 3, 4 } } },
-                { "alpha", new List<List<int>> { new List<int> { 4, 0 }, new List<int> { 4, 1 }, new List<int> { 4, 2 }, new List<int> { 4, 3 }, new List<int> { 4, 4 } } },
-                { "kappa", new List<List<int>> { new List<int> { 5, 0 }, new List<int> { 5, 1 }, new List<int> { 5, 2 }, new List<int> { 5, 3 }, new List<int> { 5, 4 } } },
-                { "epsilon", new List<List<int>> { new List<int> { 6, 0 }, new List<int> { 6, 1 }, new List<int> { 6, 2 }, new List<int> { 6, 3 }, new List<int> { 6, 4 }, new List<int> { 6, 5 } } }
+                {
+                    "beta",
+                    new List<List<int>>
+                    {
+                        new() { 2, 0 }, new() { 2, 1 }, new() { 2, 2 }, new() { 2, 3 }
+                    }
+                },
+                {
+                    "sigma",
+                    new List<List<int>>
+                    {
+                        new() { 1, 0 }, new() { 2, 0 }, new() { 3, 0 }, new() { 4, 0 },
+                        new() { 5, 0 }
+                    }
+                },
+                {
+                    "gamma",
+                    new List<List<int>>
+                    {
+                        new() { 2, 2 }, new() { 2, 3 }, new() { 2, 4 }, new() { 2, 5 },
+                        new() { 2, 6 }
+                    }
+                },
+                {
+                    "delta",
+                    new List<List<int>>
+                    {
+                        new() { 3, 0 }, new() { 3, 1 }, new() { 3, 2 }, new() { 3, 3 },
+                        new() { 3, 4 }
+                    }
+                },
+                {
+                    "alpha",
+                    new List<List<int>>
+                    {
+                        new() { 4, 0 }, new() { 4, 1 }, new() { 4, 2 }, new() { 4, 3 },
+                        new() { 4, 4 }
+                    }
+                },
+                {
+                    "kappa",
+                    new List<List<int>>
+                    {
+                        new() { 5, 0 }, new() { 5, 1 }, new() { 5, 2 }, new() { 5, 3 },
+                        new() { 5, 4 }
+                    }
+                },
+                {
+                    "epsilon",
+                    new List<List<int>>
+                    {
+                        new() { 6, 0 }, new() { 6, 1 }, new() { 6, 2 }, new() { 6, 3 },
+                        new() { 6, 4 }, new() { 6, 5 }
+                    }
+                }
             }
         };
 
-        puzzle = new Puzzle();
-        puzzle.Init(puzzleData, validWords);
+        puzzle = new Puzzle(puzzleData, validWords);
     }
 
     [Test]
     public void TestInit()
     {
-        Assert.AreEqual("Greek Mythology", puzzle.data.theme);
-        Assert.AreEqual("greekletters", puzzle.data.spangram);
-        Assert.AreEqual(7, puzzle.data.correctWords.Count);
+        Assert.AreEqual("Greek Mythology", puzzle.Data.theme);
+        Assert.AreEqual("greekletters", puzzle.Data.spangram);
+        Assert.AreEqual(7, puzzle.Data.correctWords.Count);
     }
 
     [Test]
     public void TestPuzzleWordsCount()
     {
-        int count = puzzle.data.PuzzleWordsCount();
+        int count = puzzle.Data.PuzzleWordsCount();
         Assert.AreEqual(8, count); // 7 correct words + 1 spangram
     }
 
     [Test]
     public void TestPuzzleWordsFound()
     {
-        int found = puzzle.state.PuzzleWordsFound();
+        int found = puzzle.State.PuzzleWordsFound();
         Assert.AreEqual(0, found);
 
         puzzle.Guess("beta");
-        found = puzzle.state.PuzzleWordsFound();
+        found = puzzle.State.PuzzleWordsFound();
         Assert.AreEqual(1, found);
 
         puzzle.Guess("greekletters");
-        found = puzzle.state.PuzzleWordsFound();
+        found = puzzle.State.PuzzleWordsFound();
         Assert.AreEqual(2, found);
     }
 
@@ -110,20 +153,18 @@ public class PuzzleTests
     [Test]
     public void TestRevealWord()
     {
-        puzzle.state.hints = 0;
+        puzzle.State.hints = 0;
         Assert.AreEqual(null, puzzle.RevealWord());
-        Assert.AreEqual(puzzle.state.hints, 0);
+        Assert.AreEqual(puzzle.State.hints, 0);
 
-        puzzle.state.hints++;
-        Assert.AreEqual(puzzle.data.wordPositions[puzzle.data.correctWords[0]],puzzle.RevealWord());
-        Assert.AreEqual(puzzle.state.hints, 0);
+        puzzle.State.hints++;
+        Assert.AreEqual(puzzle.Data.wordPositions[puzzle.Data.correctWords[0]], puzzle.RevealWord());
+        Assert.AreEqual(puzzle.State.hints, 0);
 
-        puzzle.Guess(puzzle.data.correctWords[0]);
-        Assert.AreEqual(puzzle.state.hints, 0);
+        puzzle.Guess(puzzle.Data.correctWords[0]);
+        Assert.AreEqual(puzzle.State.hints, 0);
         Assert.AreEqual(null, puzzle.RevealWord());
-        puzzle.state.hints++;
-        Assert.AreEqual(puzzle.data.wordPositions[puzzle.data.correctWords[1]], puzzle.RevealWord());
+        puzzle.State.hints++;
+        Assert.AreEqual(puzzle.Data.wordPositions[puzzle.Data.correctWords[1]], puzzle.RevealWord());
     }
-
-
 }
