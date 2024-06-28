@@ -4,7 +4,6 @@ using Data;
 using Gameplay;
 using NUnit.Framework;
 using TMPro;
-using UI;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
@@ -37,7 +36,6 @@ public class BoardTests
         board.gameStatusText = CreateTextMeshPro("GameStatusText");
         board.hintButtonText = CreateTextMeshPro("HintButtonText");
         board.hintButton = new GameObject().AddComponent<Button>();
-        board.timer = new GameObject().AddComponent<Timer>();
     }
 
     private Puzzle SetUpPuzzle()
