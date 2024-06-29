@@ -7,7 +7,7 @@ namespace UI
     {
         public static Timer Instance { get; private set; }
         public TextMeshProUGUI timerText;
-        private float ElapsedTime { get; set; }
+        public float ElapsedTime { get; set; }
         private bool isTimeRunning;
 
         private void Awake()

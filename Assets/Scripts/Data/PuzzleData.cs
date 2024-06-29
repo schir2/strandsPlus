@@ -3,8 +3,10 @@ using System.Collections.Generic;
 namespace Data
 {
     public class 
+        
         PuzzleData
     {
+        public string id;
         public string theme;
         public string spangram;
         public List<string> correctWords;

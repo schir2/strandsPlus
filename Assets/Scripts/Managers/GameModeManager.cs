@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using GameModes;
 using UnityEngine;
 
 namespace Managers
@@ -7,7 +9,7 @@ namespace Managers
     {
         public static GameModeManager Instance { get; private set; }
 
-        public GameMode currentGameMode;
+        public GameMode CurrentGameMode { get; private set; }
         private Dictionary<string, GameMode> gameModes;
 
         private void Awake()
@@ -28,26 +30,18 @@ namespace Managers
         {
             gameModes = new Dictionary<string, GameMode>
             {
-                { "Standard", new GameMode("Standard", GameModeOptions.None) },
-                { "TimeAttack", new GameMode("Time Attack", GameModeOptions.TimeTrial) },
-                {
-                    "AllOptions",
-                    new GameMode("All Options",
-                        GameModeOptions.TimeTrial | GameModeOptions.Timed | GameModeOptions.Hints |
-                        GameModeOptions.OnlyCorrectWords | GameModeOptions.SpangramOnly)
-                },
-                { "Custom", new GameMode("Custom", GameModeOptions.None) } // Initially empty, user will set options
+                { "Standard", new StandardGameMode() },
             };
 
-            currentGameMode = gameModes["Standard"];
+            CurrentGameMode = gameModes["Standard"];
         }
 
         public void SetGameMode(string modeName)
         {
             if (gameModes.ContainsKey(modeName))
             {
-                currentGameMode = gameModes[modeName];
-                Debug.Log($"Game mode changed to: {currentGameMode.name}");
+                CurrentGameMode = gameModes[modeName];
+                Debug.Log($"Game mode changed to: {CurrentGameMode.name}");
             }
             else
             {
@@ -57,13 +51,12 @@ namespace Managers
 
         public void SetCustomGameMode(GameModeOptions options)
         {
-            currentGameMode = new GameMode("Custom", options);
-            Debug.Log("Custom game mode set.");
+            throw new NotImplementedException();
         }
 
         public void ApplyDefaultGameMode()
         {
-            currentGameMode = gameModes["Standard"];
+            CurrentGameMode = gameModes["Standard"];
             Debug.Log("Standard game mode applied.");
         }
     }

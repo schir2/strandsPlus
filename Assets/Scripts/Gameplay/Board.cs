@@ -288,5 +288,18 @@ namespace Gameplay
                 rows[tileAndState[0]].tiles[tileAndState[1]].SetHighlightedState();
             }
         }
+
+        private void Update()
+        {
+            UpdateHintText();
+            if (GameModeManager.Instance.CurrentGameMode.CheckWinCondition(puzzle))
+            {
+                GameManager.Instance.ChangeState(GameState.Won);
+            }
+            if (GameModeManager.Instance.CurrentGameMode.CheckLoseCondition(puzzle))
+            {
+                GameManager.Instance.ChangeState(GameState.Lost);
+            }
+        }
     }
 }

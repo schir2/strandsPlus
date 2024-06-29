@@ -13,6 +13,10 @@ namespace Data
         public bool spangramFound = false;
         public string lastWordGuessed;
         public Puzzle.GuessResult lastGuessResult;
+        public int hintsUsedCount = 0;
+        public int longestStreak = 0;
+        public int currentStreak = 0;
+        public int spangramFoundIn = int.MaxValue;
 
         public void IncrementCorrectGuessCount()
         {
