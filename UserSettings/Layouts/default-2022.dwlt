@@ -15,11 +15,11 @@ MonoBehaviour:
   m_PixelRect:
     serializedVersion: 2
     x: 0
-    y: 43
-    width: 1920
-    height: 989
+    y: 764.00006
+    width: 1706.6667
+    height: 869.3334
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Hierarchy
   m_RootView: {fileID: 4}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -39,12 +39,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 838
+    x: 713.3333
     y: 0
-    width: 419
-    height: 227
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
+    width: 356.00006
+    height: 198.66669
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 22}
@@ -68,9 +68,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 712
-    width: 1257
-    height: 227
+    y: 620.6667
+    width: 1069.3334
+    height: 198.66669
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
@@ -95,8 +95,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1920
-    height: 989
+    width: 1706.6667
+    height: 869.3334
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -120,7 +120,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1920
+    width: 1706.6667
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -141,8 +141,8 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 969
-    width: 1920
+    y: 849.3334
+    width: 1706.6667
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -166,8 +166,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
-    width: 1920
-    height: 939
+    width: 1706.6667
+    height: 819.3334
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
@@ -189,8 +189,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 206
-    height: 939
+    width: 230
+    height: 819.3334
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 16}
@@ -215,10 +215,10 @@ MonoBehaviour:
   - {fileID: 3}
   m_Position:
     serializedVersion: 2
-    x: 206
+    x: 230
     y: 0
-    width: 1257
-    height: 939
+    width: 1069.3334
+    height: 819.3334
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
@@ -242,8 +242,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1257
-    height: 712
+    width: 1069.3334
+    height: 620.6667
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
@@ -265,10 +265,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 306
-    height: 712
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+    width: 260
+    height: 620.6667
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -289,10 +289,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 306
+    x: 260
     y: 0
-    width: 951
-    height: 712
+    width: 809.3334
+    height: 620.6667
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 18}
@@ -319,8 +319,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 838
-    height: 227
+    width: 713.3333
+    height: 198.66669
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 15}
@@ -343,10 +343,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1463
+    x: 1299.3334
     y: 0
-    width: 457
-    height: 939
+    width: 407.33337
+    height: 819.3334
   m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 21}
@@ -370,14 +370,14 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Console
-    m_Image: {fileID: -4327648978806127646, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -4950941429401207979, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 206
-    y: 785
-    width: 836
-    height: 206
+    x: 230
+    y: 1414.6667
+    width: 711.3333
+    height: 177.66669
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -404,14 +404,14 @@ MonoBehaviour:
   m_MaxSize: {x: 10000, y: 10000}
   m_TitleContent:
     m_Text: Project
-    m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -5179483145760003458, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 73
-    width: 205
-    height: 918
+    y: 794.00006
+    width: 229
+    height: 798.3334
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -432,8 +432,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 1
     m_SearchArea: 1
-    m_Folders:
-    - Assets/Scripts
+    m_Folders: []
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -478,7 +477,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff000000003411000036650000386500003a6500003c6500003e650000406500004265000044650000
+    m_ExpandedIDs: ffffffff00000000341100007a64000036650000386500003a6500003c6500003e6500004065000042650000446500005e650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -550,14 +549,14 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Hierarchy
-    m_Image: {fileID: 7966133145522015247, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -3734745235275155857, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 206
-    y: 73
-    width: 304
-    height: 691
+    x: 230
+    y: 794.00006
+    width: 258
+    height: 599.6667
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -571,9 +570,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 1afbffff
+      m_SelectedIDs: e8820000
+      m_LastClickedID: 33512
+      m_ExpandedIDs: 62afffffa6afffffb0b2ffffecb4ffff7cb8ffffc0b8ffffd0bbffff34beffff00daffff98dcffff5cefffffaaefffff1afbffffc0630000c4630000046400003a6400006e6400007a640000f6810000fa810000a2820000e8820000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -613,14 +612,14 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Scene
-    m_Image: {fileID: 2593428753322112591, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: 8634526014445323508, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 512
-    y: 73
-    width: 949
-    height: 691
+    x: 490
+    y: 794.00006
+    width: 807.3334
+    height: 599.6667
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1061,14 +1060,14 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Game
-    m_Image: {fileID: -6423792434712278376, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: 4621777727084837110, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 2432
-    y: 75
-    width: 949
-    height: 692
+    x: 490
+    y: 794.00006
+    width: 807.3334
+    height: 599.6667
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1100,10 +1099,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -360
-    m_HBaseRangeMax: 360
-    m_VBaseRangeMin: -640
-    m_VBaseRangeMax: 640
+    m_HBaseRangeMin: -240
+    m_HBaseRangeMax: 240
+    m_VBaseRangeMin: -426.6667
+    m_VBaseRangeMax: 426.6667
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1121,23 +1120,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 949
-      height: 671
-    m_Scale: {x: 0.52421874, y: 0.52421874}
-    m_Translation: {x: 474.5, y: 335.5}
+      width: 807.3334
+      height: 578.6667
+    m_Scale: {x: 0.67812496, y: 0.67812496}
+    m_Translation: {x: 403.6667, y: 289.33334}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -905.1565
-      y: -640
-      width: 1810.313
-      height: 1280
+      x: -595.26886
+      y: -426.66672
+      width: 1190.5377
+      height: 853.33344
     m_MinimalGUI: 1
-  m_defaultScale: 0.52421874
-  m_LastWindowPixelSize: {x: 949, y: 692}
+  m_defaultScale: 0.67812496
+  m_LastWindowPixelSize: {x: 1211, y: 899.5}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1159,7 +1158,7 @@ MonoBehaviour:
   m_MaxSize: {x: 2048, y: 2048}
   m_TitleContent:
     m_Text: Asset Store
-    m_Image: {fileID: -8693916549880196297, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -7444545952099596278, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
@@ -1193,14 +1192,14 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Inspector
-    m_Image: {fileID: -2667387946076563598, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -440750813802333266, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1463
-    y: 73
-    width: 456
-    height: 918
+    x: 1299.3334
+    y: 794.00006
+    width: 406.33337
+    height: 798.3334
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1244,10 +1243,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1044
-    y: 785
-    width: 417
-    height: 206
+    x: 943.3334
+    y: 1414.6667
+    width: 354.00006
+    height: 177.66669
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1259,12 +1258,12 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 175
+    ID: 3552
     splitterInitialOffset: 270
     currentActiveSplitter: -1
     realSizes:
-    - 78
-    - 58
+    - 61.333332
+    - 45.333332
     relativeSizes:
     - 0.5742857
     - 0.4257143
@@ -1274,7 +1273,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 136
+    lastTotalSize: 106.666664
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -1282,7 +1281,7 @@ MonoBehaviour:
     oldMinSizes: 
     oldMaxSizes: 
     oldSplitSize: 0
-  m_TestTypeToolbarIndex: 1
+  m_TestTypeToolbarIndex: 0
   m_PlayModeTestListGUI:
     m_Window: {fileID: 22}
     m_NewResultList:
@@ -1290,8 +1289,8 @@ MonoBehaviour:
       uniqueId: '[strands][suite]'
       name: strands
       fullName: strands
-      resultStatus: 0
-      duration: 0.3105474
+      resultStatus: 2
+      duration: 0.2918975
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1306,8 +1305,8 @@ MonoBehaviour:
       uniqueId: '[PlayModeTests][C:/code/unity/strandsPlus/Library/ScriptAssemblies/PlayModeTests.dll][suite]'
       name: PlayModeTests.dll
       fullName: C:/code/unity/strandsPlus/Library/ScriptAssemblies/PlayModeTests.dll
-      resultStatus: 0
-      duration: 0.2800721
+      resultStatus: 2
+      duration: 0.262221
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1322,8 +1321,8 @@ MonoBehaviour:
       uniqueId: PlayModeTests.dll/[PlayModeTests][BoardTests][suite]
       name: BoardTests
       fullName: BoardTests
-      resultStatus: 0
-      duration: 0.2729662
+      resultStatus: 2
+      duration: 0.1577388
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1334,80 +1333,21 @@ MonoBehaviour:
       categories: []
       parentId: 1025
       parentUniqueId: '[PlayModeTests][C:/code/unity/strandsPlus/Library/ScriptAssemblies/PlayModeTests.dll][suite]'
-    - id: 1018
-      uniqueId: PlayModeTests.dll/BoardTests/[PlayModeTests][BoardTests.TestEndSelection]
-      name: TestEndSelection
-      fullName: BoardTests.TestEndSelection
-      resultStatus: 0
-      duration: 0.1838209
-      messages: 'Unhandled log message: ''[Exception] NullReferenceException: Object
-        reference not set to an instance of an object''. Use UnityEngine.TestTools.LogAssert.Expect'
-      output: 'NullReferenceException: Object reference not set to an instance of
-        an object
-
-'
-      stacktrace: 'Board.UpdateHintText () (at Assets/Scripts/Board.cs:164)
-
-        Board.Update
-        () (at Assets/Scripts/Board.cs:78)
-
-
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1015
-      parentUniqueId: PlayModeTests.dll/[PlayModeTests][BoardTests][suite]
     - id: 1016
       uniqueId: PlayModeTests.dll/BoardTests/[PlayModeTests][BoardTests.TestSetupBoard]
       name: TestSetupBoard
       fullName: BoardTests.TestSetupBoard
-      resultStatus: 0
-      duration: 0.2055379
+      resultStatus: 2
+      duration: 0.1247319
       messages: 'Unhandled log message: ''[Exception] NullReferenceException: Object
         reference not set to an instance of an object''. Use UnityEngine.TestTools.LogAssert.Expect'
       output: 'NullReferenceException: Object reference not set to an instance of
         an object
 
 '
-      stacktrace: 'Board.UpdateHintText () (at Assets/Scripts/Board.cs:164)
+      stacktrace: 'Gameplay.Board.Start () (at Assets/Scripts/Gameplay/Board.cs:67)
 
-        Board.Update
-        () (at Assets/Scripts/Board.cs:78)
-
-
-
-'
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1015
-      parentUniqueId: PlayModeTests.dll/[PlayModeTests][BoardTests][suite]
-    - id: 1017
-      uniqueId: PlayModeTests.dll/BoardTests/[PlayModeTests][BoardTests.TestTileSelection]
-      name: TestTileSelection
-      fullName: BoardTests.TestTileSelection
-      resultStatus: 0
-      duration: 0.0179205
-      messages: 'Unhandled log message: ''[Exception] NullReferenceException: Object
-        reference not set to an instance of an object''. Use UnityEngine.TestTools.LogAssert.Expect'
-      output: 'NullReferenceException: Object reference not set to an instance of
-        an object
-
-'
-      stacktrace: 'Board.UpdateHintText () (at Assets/Scripts/Board.cs:164)
-
-        Board.Update
-        () (at Assets/Scripts/Board.cs:78)
-
-
+        
 
 '
       notRunnable: 0
@@ -1422,8 +1362,8 @@ MonoBehaviour:
       uniqueId: PlayModeTests.dll/[PlayModeTests][TileTests][suite]
       name: TileTests
       fullName: TileTests
-      resultStatus: 0
-      duration: 0.1674676
+      resultStatus: 1
+      duration: 0.0967695
       messages: 
       output: 
       stacktrace: 
@@ -1438,8 +1378,8 @@ MonoBehaviour:
       uniqueId: PlayModeTests.dll/TileTests/[PlayModeTests][TileTests.TestOnPointerDown]
       name: TestOnPointerDown
       fullName: TileTests.TestOnPointerDown
-      resultStatus: 0
-      duration: 0.1074539
+      resultStatus: 1
+      duration: 0.0547243
       messages: 
       output: 
       stacktrace: 
@@ -1455,8 +1395,8 @@ MonoBehaviour:
       uniqueId: PlayModeTests.dll/TileTests/[PlayModeTests][TileTests.TestOnPointerEnter]
       name: TestOnPointerEnter
       fullName: TileTests.TestOnPointerEnter
-      resultStatus: 0
-      duration: 0.0023578
+      resultStatus: 1
+      duration: 0.0027161
       messages: 
       output: 
       stacktrace: 
@@ -1472,8 +1412,8 @@ MonoBehaviour:
       uniqueId: PlayModeTests.dll/TileTests/[PlayModeTests][TileTests.TestOnPointerUp]
       name: TestOnPointerUp
       fullName: TileTests.TestOnPointerUp
-      resultStatus: 0
-      duration: 0.0027974
+      resultStatus: 1
+      duration: 0.0030412
       messages: 
       output: 
       stacktrace: 
@@ -1489,8 +1429,8 @@ MonoBehaviour:
       uniqueId: PlayModeTests.dll/TileTests/[PlayModeTests][TileTests.TestSetLetter]
       name: TestSetLetter
       fullName: TileTests.TestSetLetter
-      resultStatus: 0
-      duration: 0.0107922
+      resultStatus: 1
+      duration: 0.011214
       messages: 
       output: 
       stacktrace: 
@@ -1506,8 +1446,8 @@ MonoBehaviour:
       uniqueId: PlayModeTests.dll/TileTests/[PlayModeTests][TileTests.TestSetState]
       name: TestSetState
       fullName: TileTests.TestSetState
-      resultStatus: 0
-      duration: 0.0060553
+      resultStatus: 1
+      duration: 0.0084919
       messages: 
       output: 
       stacktrace: 
@@ -1519,13 +1459,26 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: PlayModeTests.dll/[PlayModeTests][TileTests][suite]
-    m_ResultText: 
-    m_ResultStacktrace: 'Board.UpdateHintText () (at Assets/Scripts/Board.cs:164)
+    m_ResultText: 'TestSetupBoard (0.125s)
 
-      Board.Update
-      () (at Assets/Scripts/Board.cs:78)
+      ---
 
+      Unhandled log message:
+      ''[Exception] NullReferenceException: Object reference not set to an instance
+      of an object''. Use UnityEngine.TestTools.LogAssert.Expect
 
+      ---
+
+      Gameplay.Board.Start
+      () (at Assets/Scripts/Gameplay/Board.cs:67)
+
+      ---
+
+      NullReferenceException:
+      Object reference not set to an instance of an object'
+    m_ResultStacktrace: 'Gameplay.Board.Start () (at Assets/Scripts/Gameplay/Board.cs:67)
+
+      
 
 '
     m_TestListState:
@@ -1567,7 +1520,7 @@ MonoBehaviour:
       name: strands
       fullName: strands
       resultStatus: 1
-      duration: 0.129011
+      duration: 0.1004115
       messages: 
       output: 
       stacktrace: 
@@ -1583,7 +1536,7 @@ MonoBehaviour:
       name: EditModeTests.dll
       fullName: C:/code/unity/strandsPlus/Library/ScriptAssemblies/EditModeTests.dll
       resultStatus: 1
-      duration: 0.0787673
+      duration: 0.0592743
       messages: 
       output: 
       stacktrace: 
@@ -1599,7 +1552,7 @@ MonoBehaviour:
       name: PuzzleTests
       fullName: PuzzleTests
       resultStatus: 1
-      duration: 0.0764829
+      duration: 0.0567638
       messages: 
       output: 
       stacktrace: 
@@ -1615,7 +1568,7 @@ MonoBehaviour:
       name: TestGuess
       fullName: PuzzleTests.TestGuess
       resultStatus: 1
-      duration: 0.0467428
+      duration: 0.033243
       messages: 
       output: 
       stacktrace: 
@@ -1632,7 +1585,7 @@ MonoBehaviour:
       name: TestInit
       fullName: PuzzleTests.TestInit
       resultStatus: 1
-      duration: 0.001827
+      duration: 0.0012735
       messages: 
       output: 
       stacktrace: 
@@ -1649,7 +1602,7 @@ MonoBehaviour:
       name: TestIsCorrectdWord
       fullName: PuzzleTests.TestIsCorrectdWord
       resultStatus: 1
-      duration: 0.0011421
+      duration: 0.0010383
       messages: 
       output: 
       stacktrace: 
@@ -1666,7 +1619,7 @@ MonoBehaviour:
       name: TestIsSpangramWord
       fullName: PuzzleTests.TestIsSpangramWord
       resultStatus: 1
-      duration: 0.0003311
+      duration: 0.0003206
       messages: 
       output: 
       stacktrace: 
@@ -1683,7 +1636,7 @@ MonoBehaviour:
       name: TestIsValidWord
       fullName: PuzzleTests.TestIsValidWord
       resultStatus: 1
-      duration: 0.0003049
+      duration: 0.0002995
       messages: 
       output: 
       stacktrace: 
@@ -1700,7 +1653,7 @@ MonoBehaviour:
       name: TestPuzzleWordsCount
       fullName: PuzzleTests.TestPuzzleWordsCount
       resultStatus: 1
-      duration: 0.000386
+      duration: 0.0002983
       messages: 
       output: 
       stacktrace: 
@@ -1717,7 +1670,7 @@ MonoBehaviour:
       name: TestPuzzleWordsFound
       fullName: PuzzleTests.TestPuzzleWordsFound
       resultStatus: 1
-      duration: 0.0005036
+      duration: 0.0003567
       messages: 
       output: 
       stacktrace: 
@@ -1734,7 +1687,7 @@ MonoBehaviour:
       name: TestRevealWord
       fullName: PuzzleTests.TestRevealWord
       resultStatus: 1
-      duration: 0.0463925
+      duration: 0.0005269
       messages: 
       output: 
       stacktrace: 
@@ -1746,7 +1699,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1014
       parentUniqueId: EditModeTests.dll/[EditModeTests][PuzzleTests][suite]
-    m_ResultText: TestRevealWord (0.046s)
+    m_ResultText: TestRevealWord (0.001s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}

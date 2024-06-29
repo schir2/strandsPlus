@@ -1526,7 +1526,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 347889907}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e3763fdce3861346bc301c903b6071e, type: 3}
+  m_Script: {fileID: 11500000, guid: 69673ab57db77c244b16d5f212e79426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 347889909}
@@ -4107,7 +4107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1463491489}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f50edf15615e4d42b11357fb67778ff, type: 3}
+  m_Script: {fileID: 11500000, guid: b15a874cb9440a94ebba9c9b6579f395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   resumeButton: {fileID: 390846503}
