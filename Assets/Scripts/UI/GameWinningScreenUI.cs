@@ -29,19 +29,22 @@ namespace UI
 
         private void Start()
         {
-            var puzzle = PuzzleManager.Instance.GetCurrentPuzzle();
+            backButton.onClick.AddListener(OnBackButtonClicked);
+            shareButton.onClick.AddListener(OnShareButtonClicked);
+            mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
+        }
+
+        public void InflateGameWinningPanel()
+        {
+            var puzzle = PuzzleManager.Instance.ActivePuzzle;
             puzzleIDValueText.text = puzzle.Data.id;
             puzzleThemeValueText.text = puzzle.Data.theme;
             puzzleSpangramValueText.text = puzzle.Data.spangram;
             puzzleSpangramFoundInValueText.text = puzzle.State.spangramFoundIn.ToString();
             timeElapsedValueText.text = Timer.Instance.ElapsedTime.ToString();
-            guessCountValueText.text = puzzle.State.guessCount.ToString();
+            guessCountValueText.text = puzzle.State.GuessCount.ToString();
             hintsUsedCountValueText.text = puzzle.State.hintsUsedCount.ToString();
             longestStreakValueText.text = puzzle.State.longestStreak.ToString();
-
-            backButton.onClick.AddListener(OnBackButtonClicked);
-            shareButton.onClick.AddListener(OnShareButtonClicked);
-            mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
         }
 
         private static void OnMainMenuButtonClicked()
