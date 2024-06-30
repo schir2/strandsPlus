@@ -11,7 +11,7 @@ namespace Managers
         public static PuzzleManager Instance { get; private set; }
 
         private Dictionary<string, PuzzleData> dailyPuzzles;
-        public HashSet<string> validWords { get; private set; } = new HashSet<string>();
+        private readonly HashSet<string> validWords = new();
         public string dailyPuzzleFileName = "dailyPuzzles.json";
         public Puzzle ActivePuzzle { get; private set; }
 
@@ -36,7 +36,7 @@ namespace Managers
             TextAsset jsonFile = Resources.Load<TextAsset>(dailyPuzzleFileName.Replace(".json", ""));
             if (jsonFile != null)
             {
-                string json = jsonFile.text;
+                var json = jsonFile.text;
                 dailyPuzzles = JsonConvert.DeserializeObject<Dictionary<string, PuzzleData>>(json);
             }
             else
@@ -47,14 +47,14 @@ namespace Managers
 
         void LoadValidWords()
         {
-            TextAsset wordListTextAsset = Resources.Load<TextAsset>("dictionary");
+            var wordListTextAsset = Resources.Load<TextAsset>("dictionary");
 
             if (wordListTextAsset != null)
             {
-                string[] words =
+                var words =
                     wordListTextAsset.text.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
-                foreach (string word in words)
+                foreach (var word in words)
                 {
                     validWords.Add(word.Trim().ToLower());
                 }
@@ -67,7 +67,7 @@ namespace Managers
 
         public Puzzle GetTodaysPuzzle()
         {
-            string today = DateTime.Now.ToString("yyyy-MM-dd");
+            var today = DateTime.Now.ToString("yyyy-MM-dd");
             PuzzleData data;
 
             if (dailyPuzzles.ContainsKey(today))
@@ -80,16 +80,6 @@ namespace Managers
             }
 
             ActivePuzzle = new Puzzle(data, validWords);
-            return ActivePuzzle;
-        }
-
-        public Puzzle GetCurrentPuzzle()
-        {
-            if (ActivePuzzle == null)
-            {
-                Debug.LogError("No current puzzle is set!");
-            }
-
             return ActivePuzzle;
         }
     }
