@@ -29,24 +29,24 @@ namespace Data
             return word == Data.spangram;
         }
 
-        public bool IsCorrectdWord(string word)
+        public bool IsCorrectWord(string word)
         {
             return Data.correctWords.Contains(word);
         }
 
         public bool IsValidWord(string word)
         {
-            return ValidWords.Contains(word) && !State.wordsGuessed.Contains(word);
+            return ValidWords.Contains(word) && !State.WordsGuessed.Contains(word);
         }
 
         public GuessResult Guess(string word)
         {
-            var guessResult = EvalueGuess(word);
+            var guessResult = EvaluateGuess(word);
             State.UpdateState(guessResult, word);
             return guessResult;
         }
 
-        private GuessResult EvalueGuess(string word)
+        private GuessResult EvaluateGuess(string word)
         {
             State.lastWordGuessed = word;
 
@@ -55,7 +55,7 @@ namespace Data
                 return GuessResult.Spangram;
             }
 
-            if (IsCorrectdWord(word))
+            if (IsCorrectWord(word))
             {
                 return GuessResult.Correct;
             }
@@ -65,11 +65,10 @@ namespace Data
 
         public List<List<int>> RevealWord()
         {
-            if (State.Hints <= 0) return null;
             foreach (var word in Data.correctWords)
             {
-                if (State.correctWordsGuessed.Contains(word)) continue;
-                State.Hints--;
+                if (State.CorrectWordsGuessed.Contains(word)) continue;
+                State.revealedWord = word;
                 return Data.wordPositions[word];
             }
 
