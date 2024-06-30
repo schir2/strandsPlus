@@ -130,8 +130,8 @@ public class PuzzleTests
     [Test]
     public void TestIsCorrectdWord()
     {
-        Assert.IsTrue(puzzle.IsCorrectdWord("beta"));
-        Assert.IsFalse(puzzle.IsCorrectdWord("incorrect"));
+        Assert.IsTrue(puzzle.IsCorrectWord("beta"));
+        Assert.IsFalse(puzzle.IsCorrectWord("incorrect"));
     }
 
     [Test]
