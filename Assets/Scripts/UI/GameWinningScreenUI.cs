@@ -34,9 +34,10 @@ namespace UI
             mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
         }
 
-        public void InflateGameWinningPanel()
+        private void InflateGameWinningPanel()
         {
             var puzzle = PuzzleManager.Instance.ActivePuzzle;
+            if (puzzle == null) return;
             puzzleIDValueText.text = puzzle.Data.id;
             puzzleThemeValueText.text = puzzle.Data.theme;
             puzzleSpangramValueText.text = puzzle.Data.spangram;
@@ -45,6 +46,11 @@ namespace UI
             guessCountValueText.text = puzzle.State.GuessCount.ToString();
             hintsUsedCountValueText.text = puzzle.State.hintsUsedCount.ToString();
             longestStreakValueText.text = puzzle.State.longestStreak.ToString();
+        }
+
+        private void Update()
+        {
+            InflateGameWinningPanel();
         }
 
         private static void OnMainMenuButtonClicked()

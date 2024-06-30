@@ -63,7 +63,6 @@ namespace Managers
                     break;
                 case GameState.Won:
                     Timer.Instance.PauseTimer();
-                    gameWonPanel.GetComponent<GameWinningScreenUI>().InflateGameWinningPanel();
                     break;
             }
         }
