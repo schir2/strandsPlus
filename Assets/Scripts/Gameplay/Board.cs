@@ -144,35 +144,27 @@ namespace Gameplay
         private void EndSelection()
         {
             isDragging = false;
-            string word = ConstructWordFromSelectedTiles();
-            Puzzle.GuessResult wordEvaluation = puzzle.Guess(word);
+            var word = ConstructWordFromSelectedTiles();
+            var wordEvaluation = puzzle.Guess(word);
 
             ResetSelection();
 
-            if (puzzle.State.wordsGuessed.Contains(word))
+
+            switch (wordEvaluation)
             {
-                return;
+                case Puzzle.GuessResult.Spangram:
+                    MarkSpangramWord();
+                    break;
+                case Puzzle.GuessResult.Correct:
+                    MarkCorrectWord();
+                    break;
+                case Puzzle.GuessResult.Valid:
+                    break;
+                case Puzzle.GuessResult.Invalid:
+                    break;
             }
 
-            if (Puzzle.GuessResult.Spangram == wordEvaluation)
-            {
-                puzzle.State.hints += 1;
-                puzzle.State.wordsGuessed.Add(word);
-                MarkSpangramWord();
-            }
-
-            else if (Puzzle.GuessResult.Correct == wordEvaluation)
-            {
-                puzzle.State.hints += 1;
-                puzzle.State.wordsGuessed.Add(word);
-                MarkCorrectWord();
-            }
-            else if (Puzzle.GuessResult.Valid == wordEvaluation)
-            {
-                puzzle.State.hints += 1;
-                puzzle.State.wordsGuessed.Add(word);
-            }
-
+            UpdateHintText();
             UpdateGameProgressText();
         }
 
@@ -184,7 +176,7 @@ namespace Gameplay
 
         private void UpdateHintText()
         {
-            hintButtonText.text = $"Hints {puzzle.State.hints}";
+            hintButtonText.text = $"Hints {puzzle.State.Hints}";
         }
 
         private void UpdateGameProgressText()
@@ -273,7 +265,7 @@ namespace Gameplay
 
         private void UseHint()
         {
-            if (isRevealingWord || puzzle.State.hints <= 0) return;
+            if (isRevealingWord || puzzle.State.Hints <= 0) return;
             var wordPosition = puzzle.RevealWord();
             if (wordPosition != null)
             {
@@ -291,11 +283,12 @@ namespace Gameplay
 
         private void Update()
         {
-            UpdateHintText();
+            if (puzzle == null) return;
             if (GameModeManager.Instance.CurrentGameMode.CheckWinCondition(puzzle))
             {
                 GameManager.Instance.ChangeState(GameState.Won);
             }
+
             if (GameModeManager.Instance.CurrentGameMode.CheckLoseCondition(puzzle))
             {
                 GameManager.Instance.ChangeState(GameState.Lost);
