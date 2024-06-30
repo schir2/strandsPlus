@@ -23,11 +23,10 @@ namespace Gameplay
         public int numRows;
         public int numCols;
         private Row[] rows;
-        public List<Tuple<Tile, Tile.State>> selectedTiles = new();
-        private HashSet<Tile> selectedTilesSet = new();
+        private readonly List<Tuple<Tile, Tile.State>> selectedTiles = new();
+        private readonly HashSet<Tile> selectedTilesSet = new();
 
         private bool isDragging = false;
-        private bool isRevealingWord = false;
         private int rowIndex;
         private int columnIndex;
 
@@ -260,17 +259,16 @@ namespace Gameplay
 
         public void OnHintButtonClicked()
         {
-            UseHint();
-        }
-
-        private void UseHint()
-        {
-            if (isRevealingWord || puzzle.State.Hints <= 0) return;
-            var wordPosition = puzzle.RevealWord();
-            if (wordPosition != null)
+            if (puzzle.State.UseHint())
             {
-                HighlightWord(wordPosition);
+                var wordPosition = puzzle.RevealWord();
+                if (wordPosition != null)
+                {
+                    HighlightWord(wordPosition);
+                }
             }
+
+            UpdateHintText();
         }
 
         private void HighlightWord(List<List<int>> wordPosition)
