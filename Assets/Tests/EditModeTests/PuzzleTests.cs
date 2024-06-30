@@ -153,18 +153,18 @@ public class PuzzleTests
     [Test]
     public void TestRevealWord()
     {
-        puzzle.State.hints = 0;
+        puzzle.State.Hints = 0;
         Assert.AreEqual(null, puzzle.RevealWord());
-        Assert.AreEqual(puzzle.State.hints, 0);
+        Assert.AreEqual(puzzle.State.Hints, 0);
 
-        puzzle.State.hints++;
+        puzzle.State.Hints++;
         Assert.AreEqual(puzzle.Data.wordPositions[puzzle.Data.correctWords[0]], puzzle.RevealWord());
-        Assert.AreEqual(puzzle.State.hints, 0);
+        Assert.AreEqual(puzzle.State.Hints, 0);
 
         puzzle.Guess(puzzle.Data.correctWords[0]);
-        Assert.AreEqual(puzzle.State.hints, 0);
+        Assert.AreEqual(puzzle.State.Hints, 0);
         Assert.AreEqual(null, puzzle.RevealWord());
-        puzzle.State.hints++;
+        puzzle.State.Hints++;
         Assert.AreEqual(puzzle.Data.wordPositions[puzzle.Data.correctWords[1]], puzzle.RevealWord());
     }
 }
