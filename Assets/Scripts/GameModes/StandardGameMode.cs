@@ -9,7 +9,7 @@ namespace GameModes
 
         public override bool CheckWinCondition(Puzzle puzzle)
         {
-            return puzzle.Data.correctWords.Count == puzzle.State.correctWordsGuessed.Count && puzzle.State.spangramFound;
+            return puzzle.Data.correctWords.Count == puzzle.State.CorrectWordsGuessed.Count && puzzle.State.spangramFound;
         }
 
         public override bool CheckLoseCondition(Puzzle puzzle)
