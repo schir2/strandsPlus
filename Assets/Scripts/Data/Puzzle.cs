@@ -36,53 +36,41 @@ namespace Data
 
         public bool IsValidWord(string word)
         {
-            return ValidWords.Contains(word);
+            return ValidWords.Contains(word) && !State.wordsGuessed.Contains(word);
         }
 
         public GuessResult Guess(string word)
+        {
+            var guessResult = EvalueGuess(word);
+            State.UpdateState(guessResult, word);
+            return guessResult;
+        }
+
+        private GuessResult EvalueGuess(string word)
         {
             State.lastWordGuessed = word;
 
             if (IsSpangramWord(word))
             {
-                State.spangramFound = true;
-                State.lastGuessResult = GuessResult.Spangram;
-                State.IncrementCorrectGuessCount();
-            }
-            else if (IsCorrectdWord(word))
-            {
-                State.correctWordsGuessed.Add(word);
-                State.lastGuessResult = GuessResult.Correct;
-                State.IncrementCorrectGuessCount();
-            }
-            else if (IsValidWord(word))
-            {
-                State.lastGuessResult = GuessResult.Valid;
-                if (!State.wordsGuessed.Contains(word))
-                {
-                    State.IncrementCorrectGuessCount();
-                }
-            }
-            else
-            {
-                State.lastGuessResult = GuessResult.Invalid;
+                return GuessResult.Spangram;
             }
 
-            return State.lastGuessResult;
+            if (IsCorrectdWord(word))
+            {
+                return GuessResult.Correct;
+            }
+
+            return IsValidWord(word) ? GuessResult.Valid : GuessResult.Invalid;
         }
 
         public List<List<int>> RevealWord()
         {
-            if (State.hints > 0)
+            if (State.Hints <= 0) return null;
+            foreach (var word in Data.correctWords)
             {
-                foreach (string word in Data.correctWords)
-                {
-                    if (!State.correctWordsGuessed.Contains(word))
-                    {
-                        State.hints--;
-                        return Data.wordPositions[word];
-                    }
-                }
+                if (State.correctWordsGuessed.Contains(word)) continue;
+                State.Hints--;
+                return Data.wordPositions[word];
             }
 
             return null;
