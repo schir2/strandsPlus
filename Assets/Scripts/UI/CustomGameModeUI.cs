@@ -9,10 +9,22 @@ namespace UI
         public Toggle timeTrialToggle;
         public Toggle HintsToggle;
         public Toggle onlyCorrectWordsToggle;
+        public Button StartCustomGameButton;
 
-        public void ApplyCustomGameMode()
+        private void Start()
         {
-            GameModeOptions options = GameModeOptions.None;
+            StartCustomGameButton.onClick.AddListener(OnStartCustomGameButton);
+        }
+
+        private void OnStartCustomGameButton()
+        {
+            ApplyCustomGameMode();
+            GameManager.Instance.StartCustomGame();
+        }
+
+        private void ApplyCustomGameMode()
+        {
+            var options = GameModeOptions.None;
 
             if (timeTrialToggle.isOn) options |= GameModeOptions.TimeTrial;
             if (HintsToggle.isOn) options |= GameModeOptions.Hints;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Data;
 using Newtonsoft.Json;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Managers
 {
@@ -79,6 +80,15 @@ namespace Managers
                 data = dailyPuzzles["2024-06-16"];
             }
 
+            ActivePuzzle = new Puzzle(data, validWords);
+            return ActivePuzzle;
+        }
+
+        public Puzzle GetRandomPuzzle()
+        {
+            var keys = new List<string>(dailyPuzzles.Keys);
+            var randomKey = keys[new Random().Next(keys.Count)];
+            var data = dailyPuzzles[randomKey];
             ActivePuzzle = new Puzzle(data, validWords);
             return ActivePuzzle;
         }

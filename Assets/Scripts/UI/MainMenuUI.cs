@@ -28,17 +28,17 @@ namespace UI
 
         private static void OnDailyGameButtonClicked()
         {
-            GameManager.Instance.OnSelectDailyPuzzle();
+            GameManager.Instance.StartDailyPuzzle();
         }
 
         private static void OnRandomGameButtonClicked()
         {
-            GameManager.Instance.OnStartGame();
+            GameManager.Instance.StartRandomPuzzle();
         }
 
         private static void OnGameModeSettingsButtonClicked()
         {
-            GameManager.Instance.OnGameModeSettings();
+            GameManager.Instance.ChangeState(GameState.GameModeSettings);
         }
 
         private static void OnExitGameButtonClicked()

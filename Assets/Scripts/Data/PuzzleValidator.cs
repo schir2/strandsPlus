@@ -94,7 +94,7 @@ namespace Data
             {
                 // Out of bounds or does not contain letter
                 return false;
-            }
+            } 
 
             foreach (var (dy, dx) in df)
             {

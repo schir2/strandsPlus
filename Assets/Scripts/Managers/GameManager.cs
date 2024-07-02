@@ -1,5 +1,3 @@
-using System;
-using Data;
 using Gameplay;
 using UI;
 using UnityEngine;
@@ -67,35 +65,27 @@ namespace Managers
             }
         }
 
-        internal void OnSelectDailyPuzzle()
+        internal void StartDailyPuzzle()
         {
             GameModeManager.Instance.ApplyDefaultGameMode();
-            PuzzleManager.Instance.GetTodaysPuzzle();
-            board.InitializeBoard(PuzzleManager.Instance.ActivePuzzle);
+            var puzzle = PuzzleManager.Instance.GetTodaysPuzzle();
+            board.InitializeBoard(puzzle);
             ChangeState(GameState.Playing);
         }
 
-        internal void OnStartGame()
+        internal void StartRandomPuzzle()
         {
-            throw new NotImplementedException();
-        }
-
-        internal void OnGameModeSettings()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void StartPuzzle(Puzzle puzzle)
-        {
-            if (puzzle == null)
-            {
-                Debug.LogError("No puzzle loaded.");
-                return;
-            }
-
-            // Update the board with the current puzzle
+            GameModeManager.Instance.ApplyDefaultGameMode();
+            var puzzle = PuzzleManager.Instance.GetRandomPuzzle();
             board.InitializeBoard(puzzle);
-            Debug.Log($"Starting puzzle: {puzzle.Data.theme}");
+            ChangeState(GameState.Playing);
+        }
+
+        public void StartCustomGame()
+        {
+            var puzzle = PuzzleManager.Instance.GetRandomPuzzle();
+            board.InitializeBoard(puzzle);
+            ChangeState(GameState.Playing);
         }
     }
 }
