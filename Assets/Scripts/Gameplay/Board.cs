@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Timers;
 using Data;
 using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Timer = UI.Timer;
 
 namespace Gameplay
 {
@@ -75,6 +75,7 @@ namespace Gameplay
         public void InitializeBoard(Puzzle newPuzzle)
         {
             puzzle = newPuzzle;
+            ResetBoard();
             CreateBoardLayout();
         }
 
@@ -83,7 +84,6 @@ namespace Gameplay
         {
             numRows = puzzle.Data.puzzleGrid.Count;
             numCols = puzzle.Data.puzzleGrid[0].Count;
-            ResetBoard();
             rows = new Row[numRows];
             for (var row = 0; row < puzzle.Data.puzzleGrid.Count; row++)
             {
@@ -303,11 +303,16 @@ namespace Gameplay
                 return;
             }
 
+            if (Timer.Instance != null)
+            {
+                Timer.Instance.ResetTimer();
+            }
+
             if (puzzle != null)
             {
                 selectedTiles.Clear();
                 themeValueText.text = puzzle.Data.theme;
-                UpdateGameProgressText(); 
+                UpdateGameProgressText();
                 UpdateGameStatusText();
                 UpdateHintText();
             }

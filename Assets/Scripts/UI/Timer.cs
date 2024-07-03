@@ -52,7 +52,7 @@ namespace UI
             isTimeRunning = false;
         }
 
-        private void ResetTimer()
+        public void ResetTimer()
         {
             isTimeRunning = false;
             ElapsedTime = 0f;

@@ -64,7 +64,7 @@ namespace Managers
                     break;
             }
         }
-
+        
         internal void StartDailyPuzzle()
         {
             GameModeManager.Instance.ApplyDefaultGameMode();
