@@ -2635,7 +2635,7 @@ MonoBehaviour:
   rowPrefab: {fileID: 8489520106661624763, guid: 680fe4d25bbe3b3449b0cd9841b5e684, type: 3}
   tilePrefab: {fileID: 163433604771445647, guid: c78e42d80ce4c6e4a8a9fee87eafb921, type: 3}
   themeValueText: {fileID: 58957259}
-  gameProgressText: {fileID: 531981097}
+  gameProgressText: {fileID: 1881207865}
   gameStatusText: {fileID: 531981097}
   hintButtonText: {fileID: 556349431}
   hintButton: {fileID: 676398246}

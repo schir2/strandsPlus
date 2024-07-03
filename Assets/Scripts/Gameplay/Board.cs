@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Timers;
 using Data;
 using Managers;
 using TMPro;
@@ -82,6 +83,7 @@ namespace Gameplay
         {
             numRows = puzzle.Data.puzzleGrid.Count;
             numCols = puzzle.Data.puzzleGrid[0].Count;
+            ResetBoard();
             rows = new Row[numRows];
             for (var row = 0; row < puzzle.Data.puzzleGrid.Count; row++)
             {
@@ -282,6 +284,7 @@ namespace Gameplay
         private void Update()
         {
             if (puzzle == null) return;
+
             if (GameModeManager.Instance.CurrentGameMode.CheckWinCondition(puzzle))
             {
                 GameManager.Instance.ChangeState(GameState.Won);
@@ -290,6 +293,28 @@ namespace Gameplay
             if (GameModeManager.Instance.CurrentGameMode.CheckLoseCondition(puzzle))
             {
                 GameManager.Instance.ChangeState(GameState.Lost);
+            }
+        }
+
+        private void ResetBoard()
+        {
+            if (rows == null)
+            {
+                return;
+            }
+
+            if (puzzle != null)
+            {
+                selectedTiles.Clear();
+                themeValueText.text = puzzle.Data.theme;
+                UpdateGameProgressText(); 
+                UpdateGameStatusText();
+                UpdateHintText();
+            }
+
+            foreach (var row in rows)
+            {
+                Destroy(row.gameObject);
             }
         }
     }
