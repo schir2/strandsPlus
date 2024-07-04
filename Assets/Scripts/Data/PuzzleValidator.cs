@@ -1,13 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class CollisionException : Exception
+{
+    public CollisionException(string message) : base(message)
+    {
+    }
+}
+
+public class InvalidSpangramException : Exception
+{
+    public InvalidSpangramException(string message) : base(message)
+    {
+    }
+}
+
+public class CannotFindWordException : Exception
+{
+    public CannotFindWordException() : base("Word cannot be found")
+    {
+    }
+}
+
+public class InvalidTotalWordLengthException : Exception
+{
+    public InvalidTotalWordLengthException() : base("The sum of all word lengths does not equal the total grid size")
+    {
+    }
+}
 
 namespace Data
 {
     public class PuzzleValidator
     {
-        private readonly List<List<string>> puzzleGrid;
+        private readonly List<List<char>> grid;
         private readonly List<string> correctWords;
+        private Dictionary<string, List<(int, int)>> wordPaths = new();
+        private Dictionary<string, List<(int, int)>> sortedWordPaths = new();
+
+        private HashSet<(int, int)> markedGrid = new();
+
+        private bool CollisionFound = false;
         private readonly string spangram;
-        private List<List<bool>> markedGrid = new();
 
         private readonly (int dx, int dy)[] df =
         {
@@ -21,87 +56,146 @@ namespace Data
             (dx: -1, dy: 1) // DownLeft
         };
 
-        private readonly int numCols;
-        private readonly int numRows;
+        private readonly int cols;
+        private readonly int rows;
 
-        public PuzzleValidator(List<List<string>> puzzleGrid, List<string> correctWords, string spangram)
+        public PuzzleValidator(List<List<char>> grid, List<string> correctWords, string spangram)
         {
-            this.puzzleGrid = puzzleGrid;
+            this.grid = grid;
             this.correctWords = correctWords;
 
             this.spangram = spangram;
-            numCols = puzzleGrid.Count;
-            numRows = puzzleGrid.Count;
-            for (var i = 0; i < numRows; i++)
-            {
-                markedGrid.Add(new List<bool>(new bool[numCols]));
-            }
+            rows = grid.Count;
+            cols = grid[0].Count;
         }
 
-        public bool ValidatePuzzle()
+        private (int row, int col)[] SortPath((int row, int col)[] path)
         {
-            /* Strands Validator
-             * 1. Test Spangram
-             * 2. Check for collisions
-             * 3. Cannot Start on already used letter
-             * 4. Can reuse already used letter
-             * 5. All words found
-             * 6. All letters used
-             * a b b a
-             * a l d o
-             * d o t s
-             */
-
-            if (!ValidateSpangram())
+            Array.Sort(path, (p1, p2) =>
             {
-                return false;
-            }
+                int comparison = p1.row.CompareTo(p2.row);
+                return comparison == 0 ? p1.col.CompareTo(p2.col) : comparison;
+            });
+            return path;
+        }
 
-            foreach (var word in correctWords)
+        public bool FindWord(string word)
+        {
+            var wordFound = false;
+            for (var row = 0; row < rows; row++)
             {
-                for (var row = 0; row < numRows; row++)
+                for (var col = 0; col < cols; col++)
                 {
-                    for (var col = 0; col < numCols; col++)
+                    if (word[0] != grid[row][col]) continue;
+                    if (Dfs(row, col, word, new List<(int, int)>(), ""))
                     {
-                        {
-                            Dfs(row, col, word);
-                        }
+                        wordFound = true;
                     }
                 }
             }
 
-
-            return false;
-        }
-
-        private bool ValidateSpangram()
-        {
-            int startingPosition;
-            int endingPosition;
-
-            return false;
-        }
-
-        private bool Dfs(int row, int col, string targetWord, string builder = "")
-        {
-            if (targetWord == "")
+            if (!wordFound) throw new CannotFindWordException();
+            foreach (var coords in wordPaths[word])
             {
+                markedGrid.Add(coords);
                 return true;
             }
 
-            if (row < 0 || col < 0 || row >= numRows || col >= numCols ||
-                puzzleGrid[row][col] != targetWord[0].ToString())
-            {
-                // Out of bounds or does not contain letter
-                return false;
-            } 
+            throw new CannotFindWordException();
+        }
 
-            foreach (var (dy, dx) in df)
+
+        private bool Dfs(int row, int col, string targetWord, List<(int, int)> path, string builder)
+        {
+            if (string.IsNullOrEmpty(targetWord))
             {
-                Dfs(row + dy, col + dx, targetWord[1..], builder += targetWord[0]);
+                if (sortedWordPaths.ContainsKey(builder))
+                {
+                    path.Sort();
+                    if (!sortedWordPaths[builder].SequenceEqual(path))
+                    {
+                        throw new CollisionException(string.Join(",", path));
+                    }
+                }
+
+                wordPaths[builder] = path;
+                path.Sort();
+                sortedWordPaths[builder] = path;
+                return true;
             }
 
-            return true;
+            if (markedGrid.Contains((row, col)) || row < 0 || row >= rows || col < 0 || col >= cols ||
+                path.Contains((row, col)) || grid[row][col] != targetWord[0])
+            {
+                return false;
+            }
+
+            var result = false;
+            foreach (var (drow, dcol) in df)
+            {
+                result = result || Dfs(row + drow, col + dcol, targetWord[1..],
+                    new List<(int, int)>(path) { (row, col) }, builder + grid[row][col]);
+            }
+
+            return result;
+        }
+
+        public void ValidateTotalWordLength()
+        {
+            var totalLength = correctWords.Sum(word => word.Length) + spangram.Length;
+            var gridLength = rows * cols;
+            if (totalLength != gridLength)
+            {
+                throw new InvalidTotalWordLengthException();
+            }
+        }
+
+        public void ValidatePuzzle()
+        {
+            ValidateTotalWordLength();
+            ValidateSpangram();
+
+            foreach (var word in correctWords)
+            {
+                FindWord(word);
+            }
+        }
+
+        public void ValidateSpangram()
+        {
+            try
+            {
+                FindWord(spangram);
+            }
+            catch (CannotFindWordException)
+            {
+                throw new InvalidSpangramException("Spangram word was not found");
+            }
+
+            try
+            {
+                if (!WordTouchesOppositeSides(wordPaths[spangram]))
+                {
+                    throw new InvalidSpangramException("Spangram word does not touch opposite sides");
+                }
+            }
+            catch (KeyNotFoundException)
+
+            {
+                throw new InvalidSpangramException("Spangram word does not touch opposite sides");
+            }
+        }
+
+        public bool WordTouchesOppositeSides(List<(int, int)> path)
+        {
+            var first = path.First();
+            var last = path.Last();
+
+            var touchesOppositeSides =
+                ((first.Item1 == 0 && last.Item1 == rows - 1) || (first.Item1 == rows - 1 && last.Item1 == 0)) ||
+                ((first.Item2 == 0 && last.Item2 == cols - 1) || (first.Item2 == cols - 1 && last.Item2 == 0));
+
+            return touchesOppositeSides;
         }
     }
 }
